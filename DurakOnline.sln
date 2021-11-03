@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1622
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurakWcf", "DurakWcf\DurakWcf.csproj", "{72599586-22B5-40D1-8DCF-6BC8111CE8CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DurakApp", "DurakApp\DurakApp.csproj", "{8E9F6F70-F56F-4E2D-B52E-44F2E22A3957}"
+	ProjectSection(ProjectDependencies) = postProject
+		{72599586-22B5-40D1-8DCF-6BC8111CE8CA} = {72599586-22B5-40D1-8DCF-6BC8111CE8CA}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72599586-22B5-40D1-8DCF-6BC8111CE8CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72599586-22B5-40D1-8DCF-6BC8111CE8CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72599586-22B5-40D1-8DCF-6BC8111CE8CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72599586-22B5-40D1-8DCF-6BC8111CE8CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9F6F70-F56F-4E2D-B52E-44F2E22A3957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9F6F70-F56F-4E2D-B52E-44F2E22A3957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9F6F70-F56F-4E2D-B52E-44F2E22A3957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9F6F70-F56F-4E2D-B52E-44F2E22A3957}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86911A16-EFFE-4EA1-A900-6274BD7C0CF3}
+	EndGlobalSection
+EndGlobal

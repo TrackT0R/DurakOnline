@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="02db398d-2528-4b0e-a5c3-c4287a623f4b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:60871/DurakService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DurakService.xsd" MetadataType="Schema" ID="beecf06d-ed7b-4ae4-88dc-ee1b987acbfc" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DurakService.disco" MetadataType="Disco" ID="13df13a5-c043-47f4-ae1a-490638a96dca" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?disco" />
+    <MetadataFile FileName="DurakService1.xsd" MetadataType="Schema" ID="c4be2068-ef1a-442a-b890-5b5e1fccce16" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd0" />
+    <MetadataFile FileName="DurakService.wsdl" MetadataType="Wsdl" ID="b3c9fc76-5773-473f-add4-34914d3eb931" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?wsdl" />
+    <MetadataFile FileName="DurakService2.xsd" MetadataType="Schema" ID="78a4ebef-fd5d-4b16-b11f-34add13e843b" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
