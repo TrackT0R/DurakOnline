@@ -29,7 +29,7 @@ namespace DurakWcf
 
         [OperationContract]
         string[] GetFreeRooms();
-
+        
         // TODO: Добавьте здесь операции служб
     }
 
@@ -39,10 +39,15 @@ namespace DurakWcf
     public class Room
     {
         #region Data
+        [DataMember]
         public int FirstPlayerID  { get; private set; }
+        [DataMember]
         public int SecondPlayerID { get; private set; }
+        [DataMember]
         public string RoomName    { get; private set; }
+        [DataMember]
         public bool IsFree        { get; private set; }
+        [DataMember]
         private string password   { get; set; }
         #endregion
 

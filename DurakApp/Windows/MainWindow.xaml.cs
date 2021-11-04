@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using DurakApp.DurakServiceReference;
-using DurakApp.Windows;
+using DurakApp.Windows; 
 
 namespace DurakApp
 {
@@ -26,7 +26,6 @@ namespace DurakApp
             var rnd = new Random(DateTime.Now.Millisecond);
             userId = rnd.Next(100000, 999999);
             InitializeComponent();
-
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Start();
