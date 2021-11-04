@@ -15,6 +15,7 @@ namespace DurakWcf
         private static List<Room> FreeRooms = new List<Room>();
         private static List<Room> GameRooms = new List<Room>();
 
+        #region Connect methods
         public bool HasPassword(string RoomName)
         {
             int index = FreeRooms.FindIndex(x => x.RoomName == RoomName);
@@ -74,7 +75,11 @@ namespace DurakWcf
                 t[i] = FreeRooms[i].RoomName;
             return t;
         }
+        #endregion
 
+        #region Game methods
+
+        #region Cards info requests
         public List<Card> GetMyCards(string RoomName, string password, int PlayerID)
         {
             int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
@@ -130,7 +135,9 @@ namespace DurakWcf
 
             return GameRooms[index].TrumpCard;
         }
+        #endregion
 
+        #region Move processing
         public MoveOpportunity GetMoveOpportunity(string RoomName, string password, int PlayerID)
         {
             int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
@@ -179,6 +186,9 @@ namespace DurakWcf
             }
             return false;
         }
+        #endregion
+
+        #endregion
 
         public Card Card(Card.SuitEnum suit, Card.ValueEnum value)
         {

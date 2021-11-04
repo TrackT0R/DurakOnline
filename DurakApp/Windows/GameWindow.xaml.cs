@@ -53,7 +53,5 @@ namespace DurakApp.Windows
             client.GetMyCards(RoomName, password, userID);
             client.GetCardsOnTable(RoomName, password, userID);
         }
-        
-
     }
 }
