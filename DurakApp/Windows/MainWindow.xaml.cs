@@ -19,7 +19,7 @@ namespace DurakApp
         string RoomName = "";
         DurakServiceClient client = new DurakServiceClient();
         #endregion
-        
+
         #region Initialization
         public MainWindow()
         {

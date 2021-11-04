@@ -9,7 +9,181 @@
 //------------------------------------------------------------------------------
 
 namespace DurakApp.DurakServiceReference {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Card", Namespace="http://schemas.datacontract.org/2004/07/DurakWcf")]
+    [System.SerializableAttribute()]
+    public partial class Card : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private DurakApp.DurakServiceReference.Card.SuitEnum SuitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private DurakApp.DurakServiceReference.Card.ValueEnum ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public DurakApp.DurakServiceReference.Card.SuitEnum Suit {
+            get {
+                return this.SuitField;
+            }
+            set {
+                if ((this.SuitField.Equals(value) != true)) {
+                    this.SuitField = value;
+                    this.RaisePropertyChanged("Suit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public DurakApp.DurakServiceReference.Card.ValueEnum Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Card.SuitEnum", Namespace="http://schemas.datacontract.org/2004/07/DurakWcf")]
+        public enum SuitEnum : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            heart = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            diamond = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            club = 2,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            spade = 3,
+        }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="Card.ValueEnum", Namespace="http://schemas.datacontract.org/2004/07/DurakWcf")]
+        public enum ValueEnum : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            six = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            seven = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            eight = 2,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            nine = 3,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            ten = 4,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            jack = 5,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            queen = 6,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            king = 7,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            ace = 8,
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MoveOpportunity", Namespace="http://schemas.datacontract.org/2004/07/DurakWcf")]
+    [System.SerializableAttribute()]
+    public partial class MoveOpportunity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private DurakApp.DurakServiceReference.MoveOpportunity.CanMakeMoveEnum CanMakeMoveField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public DurakApp.DurakServiceReference.MoveOpportunity.CanMakeMoveEnum CanMakeMove {
+            get {
+                return this.CanMakeMoveField;
+            }
+            set {
+                if ((this.CanMakeMoveField.Equals(value) != true)) {
+                    this.CanMakeMoveField = value;
+                    this.RaisePropertyChanged("CanMakeMove");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+        
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+        [System.Runtime.Serialization.DataContractAttribute(Name="MoveOpportunity.CanMakeMoveEnum", Namespace="http://schemas.datacontract.org/2004/07/DurakWcf")]
+        public enum CanMakeMoveEnum : int {
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            CanAttack = 0,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            CanThrow = 1,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            CanDefend = 2,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            CanNothing = 3,
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DurakServiceReference.IDurakService")]
@@ -20,12 +194,6 @@ namespace DurakApp.DurakServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/HasPassword", ReplyAction="http://tempuri.org/IDurakService/HasPasswordResponse")]
         System.Threading.Tasks.Task<bool> HasPasswordAsync(string RoomName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/IsFree", ReplyAction="http://tempuri.org/IDurakService/IsFreeResponse")]
-        bool IsFree(string RoomName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/IsFree", ReplyAction="http://tempuri.org/IDurakService/IsFreeResponse")]
-        System.Threading.Tasks.Task<bool> IsFreeAsync(string RoomName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/CreateRoom", ReplyAction="http://tempuri.org/IDurakService/CreateRoomResponse")]
         bool CreateRoom(string RoomName, string password, int UserID);
@@ -50,6 +218,54 @@ namespace DurakApp.DurakServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetFreeRooms", ReplyAction="http://tempuri.org/IDurakService/GetFreeRoomsResponse")]
         System.Threading.Tasks.Task<string[]> GetFreeRoomsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetMyCards", ReplyAction="http://tempuri.org/IDurakService/GetMyCardsResponse")]
+        DurakApp.DurakServiceReference.Card[] GetMyCards(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetMyCards", ReplyAction="http://tempuri.org/IDurakService/GetMyCardsResponse")]
+        System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card[]> GetMyCardsAsync(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetCardsOnTable", ReplyAction="http://tempuri.org/IDurakService/GetCardsOnTableResponse")]
+        DurakApp.DurakServiceReference.Card[][] GetCardsOnTable(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetCardsOnTable", ReplyAction="http://tempuri.org/IDurakService/GetCardsOnTableResponse")]
+        System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card[][]> GetCardsOnTableAsync(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetCardsInStockCount", ReplyAction="http://tempuri.org/IDurakService/GetCardsInStockCountResponse")]
+        int GetCardsInStockCount(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetCardsInStockCount", ReplyAction="http://tempuri.org/IDurakService/GetCardsInStockCountResponse")]
+        System.Threading.Tasks.Task<int> GetCardsInStockCountAsync(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetOpponentCardsCount", ReplyAction="http://tempuri.org/IDurakService/GetOpponentCardsCountResponse")]
+        int GetOpponentCardsCount(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetOpponentCardsCount", ReplyAction="http://tempuri.org/IDurakService/GetOpponentCardsCountResponse")]
+        System.Threading.Tasks.Task<int> GetOpponentCardsCountAsync(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetTrumpCard", ReplyAction="http://tempuri.org/IDurakService/GetTrumpCardResponse")]
+        DurakApp.DurakServiceReference.Card GetTrumpCard(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetTrumpCard", ReplyAction="http://tempuri.org/IDurakService/GetTrumpCardResponse")]
+        System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card> GetTrumpCardAsync(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetMoveOpportunity", ReplyAction="http://tempuri.org/IDurakService/GetMoveOpportunityResponse")]
+        DurakApp.DurakServiceReference.MoveOpportunity GetMoveOpportunity(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/GetMoveOpportunity", ReplyAction="http://tempuri.org/IDurakService/GetMoveOpportunityResponse")]
+        System.Threading.Tasks.Task<DurakApp.DurakServiceReference.MoveOpportunity> GetMoveOpportunityAsync(string RoomName, string password, int PlayerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/MakeMove", ReplyAction="http://tempuri.org/IDurakService/MakeMoveResponse")]
+        bool MakeMove(string RoomName, string password, int PlayerID, DurakApp.DurakServiceReference.Card NewCard, DurakApp.DurakServiceReference.Card TargetCard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/MakeMove", ReplyAction="http://tempuri.org/IDurakService/MakeMoveResponse")]
+        System.Threading.Tasks.Task<bool> MakeMoveAsync(string RoomName, string password, int PlayerID, DurakApp.DurakServiceReference.Card NewCard, DurakApp.DurakServiceReference.Card TargetCard);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/Card", ReplyAction="http://tempuri.org/IDurakService/CardResponse")]
+        DurakApp.DurakServiceReference.Card Card(DurakApp.DurakServiceReference.Card.SuitEnum suit, DurakApp.DurakServiceReference.Card.ValueEnum value);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDurakService/Card", ReplyAction="http://tempuri.org/IDurakService/CardResponse")]
+        System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card> CardAsync(DurakApp.DurakServiceReference.Card.SuitEnum suit, DurakApp.DurakServiceReference.Card.ValueEnum value);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -87,14 +303,6 @@ namespace DurakApp.DurakServiceReference {
             return base.Channel.HasPasswordAsync(RoomName);
         }
         
-        public bool IsFree(string RoomName) {
-            return base.Channel.IsFree(RoomName);
-        }
-        
-        public System.Threading.Tasks.Task<bool> IsFreeAsync(string RoomName) {
-            return base.Channel.IsFreeAsync(RoomName);
-        }
-        
         public bool CreateRoom(string RoomName, string password, int UserID) {
             return base.Channel.CreateRoom(RoomName, password, UserID);
         }
@@ -125,6 +333,70 @@ namespace DurakApp.DurakServiceReference {
         
         public System.Threading.Tasks.Task<string[]> GetFreeRoomsAsync() {
             return base.Channel.GetFreeRoomsAsync();
+        }
+        
+        public DurakApp.DurakServiceReference.Card[] GetMyCards(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetMyCards(RoomName, password, PlayerID);
+        }
+        
+        public System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card[]> GetMyCardsAsync(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetMyCardsAsync(RoomName, password, PlayerID);
+        }
+        
+        public DurakApp.DurakServiceReference.Card[][] GetCardsOnTable(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetCardsOnTable(RoomName, password, PlayerID);
+        }
+        
+        public System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card[][]> GetCardsOnTableAsync(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetCardsOnTableAsync(RoomName, password, PlayerID);
+        }
+        
+        public int GetCardsInStockCount(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetCardsInStockCount(RoomName, password, PlayerID);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetCardsInStockCountAsync(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetCardsInStockCountAsync(RoomName, password, PlayerID);
+        }
+        
+        public int GetOpponentCardsCount(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetOpponentCardsCount(RoomName, password, PlayerID);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetOpponentCardsCountAsync(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetOpponentCardsCountAsync(RoomName, password, PlayerID);
+        }
+        
+        public DurakApp.DurakServiceReference.Card GetTrumpCard(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetTrumpCard(RoomName, password, PlayerID);
+        }
+        
+        public System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card> GetTrumpCardAsync(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetTrumpCardAsync(RoomName, password, PlayerID);
+        }
+        
+        public DurakApp.DurakServiceReference.MoveOpportunity GetMoveOpportunity(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetMoveOpportunity(RoomName, password, PlayerID);
+        }
+        
+        public System.Threading.Tasks.Task<DurakApp.DurakServiceReference.MoveOpportunity> GetMoveOpportunityAsync(string RoomName, string password, int PlayerID) {
+            return base.Channel.GetMoveOpportunityAsync(RoomName, password, PlayerID);
+        }
+        
+        public bool MakeMove(string RoomName, string password, int PlayerID, DurakApp.DurakServiceReference.Card NewCard, DurakApp.DurakServiceReference.Card TargetCard) {
+            return base.Channel.MakeMove(RoomName, password, PlayerID, NewCard, TargetCard);
+        }
+        
+        public System.Threading.Tasks.Task<bool> MakeMoveAsync(string RoomName, string password, int PlayerID, DurakApp.DurakServiceReference.Card NewCard, DurakApp.DurakServiceReference.Card TargetCard) {
+            return base.Channel.MakeMoveAsync(RoomName, password, PlayerID, NewCard, TargetCard);
+        }
+        
+        public DurakApp.DurakServiceReference.Card Card(DurakApp.DurakServiceReference.Card.SuitEnum suit, DurakApp.DurakServiceReference.Card.ValueEnum value) {
+            return base.Channel.Card(suit, value);
+        }
+        
+        public System.Threading.Tasks.Task<DurakApp.DurakServiceReference.Card> CardAsync(DurakApp.DurakServiceReference.Card.SuitEnum suit, DurakApp.DurakServiceReference.Card.ValueEnum value) {
+            return base.Channel.CardAsync(suit, value);
         }
     }
 }

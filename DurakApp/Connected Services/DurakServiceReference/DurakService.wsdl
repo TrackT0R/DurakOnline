@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:60871/DurakService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:60871/DurakService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:60871/DurakService.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:60871/DurakService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/DurakWcf" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IDurakService_HasPassword_InputMessage">
@@ -12,12 +13,6 @@
   </wsdl:message>
   <wsdl:message name="IDurakService_HasPassword_OutputMessage">
     <wsdl:part name="parameters" element="tns:HasPasswordResponse" />
-  </wsdl:message>
-  <wsdl:message name="IDurakService_IsFree_InputMessage">
-    <wsdl:part name="parameters" element="tns:IsFree" />
-  </wsdl:message>
-  <wsdl:message name="IDurakService_IsFree_OutputMessage">
-    <wsdl:part name="parameters" element="tns:IsFreeResponse" />
   </wsdl:message>
   <wsdl:message name="IDurakService_CreateRoom_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateRoom" />
@@ -43,14 +38,58 @@
   <wsdl:message name="IDurakService_GetFreeRooms_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFreeRoomsResponse" />
   </wsdl:message>
+  <wsdl:message name="IDurakService_GetMyCards_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMyCards" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetMyCards_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMyCardsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetCardsOnTable_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardsOnTable" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetCardsOnTable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardsOnTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetCardsInStockCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardsInStockCount" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetCardsInStockCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCardsInStockCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetOpponentCardsCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOpponentCardsCount" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetOpponentCardsCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOpponentCardsCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetTrumpCard_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrumpCard" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetTrumpCard_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTrumpCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetMoveOpportunity_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMoveOpportunity" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_GetMoveOpportunity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMoveOpportunityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_MakeMove_InputMessage">
+    <wsdl:part name="parameters" element="tns:MakeMove" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_MakeMove_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MakeMoveResponse" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_Card_InputMessage">
+    <wsdl:part name="parameters" element="tns:Card" />
+  </wsdl:message>
+  <wsdl:message name="IDurakService_Card_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CardResponse" />
+  </wsdl:message>
   <wsdl:portType name="IDurakService">
     <wsdl:operation name="HasPassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/HasPassword" message="tns:IDurakService_HasPassword_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/HasPasswordResponse" message="tns:IDurakService_HasPassword_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="IsFree">
-      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/IsFree" message="tns:IDurakService_IsFree_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/IsFreeResponse" message="tns:IDurakService_IsFree_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateRoom">
       <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/CreateRoom" message="tns:IDurakService_CreateRoom_InputMessage" />
@@ -68,20 +107,43 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetFreeRooms" message="tns:IDurakService_GetFreeRooms_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetFreeRoomsResponse" message="tns:IDurakService_GetFreeRooms_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetMyCards">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetMyCards" message="tns:IDurakService_GetMyCards_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetMyCardsResponse" message="tns:IDurakService_GetMyCards_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardsOnTable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetCardsOnTable" message="tns:IDurakService_GetCardsOnTable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetCardsOnTableResponse" message="tns:IDurakService_GetCardsOnTable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCardsInStockCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetCardsInStockCount" message="tns:IDurakService_GetCardsInStockCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetCardsInStockCountResponse" message="tns:IDurakService_GetCardsInStockCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOpponentCardsCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetOpponentCardsCount" message="tns:IDurakService_GetOpponentCardsCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetOpponentCardsCountResponse" message="tns:IDurakService_GetOpponentCardsCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTrumpCard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetTrumpCard" message="tns:IDurakService_GetTrumpCard_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetTrumpCardResponse" message="tns:IDurakService_GetTrumpCard_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMoveOpportunity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/GetMoveOpportunity" message="tns:IDurakService_GetMoveOpportunity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/GetMoveOpportunityResponse" message="tns:IDurakService_GetMoveOpportunity_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MakeMove">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/MakeMove" message="tns:IDurakService_MakeMove_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/MakeMoveResponse" message="tns:IDurakService_MakeMove_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Card">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDurakService/Card" message="tns:IDurakService_Card_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDurakService/CardResponse" message="tns:IDurakService_Card_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IDurakService" type="tns:IDurakService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="HasPassword">
       <soap:operation soapAction="http://tempuri.org/IDurakService/HasPassword" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="IsFree">
-      <soap:operation soapAction="http://tempuri.org/IDurakService/IsFree" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -118,6 +180,78 @@
     </wsdl:operation>
     <wsdl:operation name="GetFreeRooms">
       <soap:operation soapAction="http://tempuri.org/IDurakService/GetFreeRooms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyCards">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/GetMyCards" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardsOnTable">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/GetCardsOnTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCardsInStockCount">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/GetCardsInStockCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOpponentCardsCount">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/GetOpponentCardsCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTrumpCard">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/GetTrumpCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMoveOpportunity">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/GetMoveOpportunity" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MakeMove">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/MakeMove" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Card">
+      <soap:operation soapAction="http://tempuri.org/IDurakService/Card" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

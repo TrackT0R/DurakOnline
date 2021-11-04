@@ -12,12 +12,10 @@ namespace DurakWcf
     [ServiceContract]
     public interface IDurakService
     {
+        #region Room methods
         [OperationContract]
         bool HasPassword(string RoomName);
-
-        [OperationContract]
-        bool IsFree(string RoomName);
-
+        
         [OperationContract]
         bool CreateRoom(string RoomName, string password, int UserID);
 
@@ -29,7 +27,26 @@ namespace DurakWcf
 
         [OperationContract]
         string[] GetFreeRooms();
-        
+        #endregion
+
+        #region Game methods
+        [OperationContract]
+        List<Card> GetMyCards(string RoomName, string password, int PlayerID);
+        [OperationContract]
+        List<List<Card>> GetCardsOnTable(string RoomName, string password, int PlayerID);
+        [OperationContract]
+        int GetCardsInStockCount(string RoomName, string password, int PlayerID);
+        [OperationContract]
+        int GetOpponentCardsCount(string RoomName, string password, int PlayerID);
+        [OperationContract]
+        Card GetTrumpCard(string RoomName, string password, int PlayerID);
+        [OperationContract]
+        MoveOpportunity GetMoveOpportunity(string RoomName, string password, int PlayerID);
+        [OperationContract]
+        bool MakeMove(string RoomName, string password, int PlayerID, Card NewCard, Card TargetCard);
+        [OperationContract]
+        Card Card(Card.SuitEnum suit, Card.ValueEnum value);
+        #endregion
         // TODO: Добавьте здесь операции служб
     }
 
@@ -38,17 +55,20 @@ namespace DurakWcf
     [DataContract]
     public class Room
     {
-        #region Data
-        [DataMember]
+        #region Room data
         public int FirstPlayerID  { get; private set; }
-        [DataMember]
         public int SecondPlayerID { get; private set; }
-        [DataMember]
         public string RoomName    { get; private set; }
-        [DataMember]
-        public bool IsFree        { get; private set; }
-        [DataMember]
-        private string password   { get; set; }
+        public string password    { get; private set; }
+        #endregion
+
+        #region Game data
+        public int GameStatus                { get; private set; } = 0; //1- первый атакует, 2- второй атакует, 11- первый отбивается, 22- второй отбивается
+        public Card TrumpCard                { get; private set; }
+        public List<Card> FirstPlayerCards   { get; private set; } = new List<Card>();
+        public List<Card> SecondPlayerCards  { get; private set; } = new List<Card>();
+        public List<Card> CardsInStock       { get; private set; } = new List<Card>();
+        public List<List<Card>> CardsOnTable { get; private set; } = new List<List<Card>>();
         #endregion
 
         #region Constructors
@@ -57,7 +77,6 @@ namespace DurakWcf
             this.RoomName = RoomName;
             this.password = password;
             this.FirstPlayerID = FirstPlayerID;
-            IsFree = true;
         }
         #endregion
 
@@ -67,28 +86,106 @@ namespace DurakWcf
             if (FirstPlayerID == SecondPlayerID)
                 return false;
             this.SecondPlayerID = SecondPlayerID;
-            IsFree = false;
+
+            BeginCardDraw();
+
             return true;
         }
 
-        public string Password
+        private void BeginCardDraw()
         {
-            get
-            {
-                return password.Length > 0 ? "*" : "";
-            }
-            set
-            {
-                if (password == value)
-                    password = "";
-            }
+            CardsOnTable = new List<List<Card>>();
+
+            #region Размешивание колоды
+            var rnd = new Random();
+            foreach (Card.SuitEnum suit in Enum.GetValues(typeof(Card.SuitEnum)))
+                foreach (Card.ValueEnum value in Enum.GetValues(typeof(Card.ValueEnum)))
+                    CardsInStock.Insert(rnd.Next(CardsInStock.Count + 1), new Card(suit, value));
+            #endregion
+
+            #region Выдача карт, определение козыря, отправка козыря вниз колоды
+            FirstPlayerCards.AddRange(CardsInStock.GetRange(0, 6));
+            SecondPlayerCards.AddRange(CardsInStock.GetRange(6, 6));
+            TrumpCard = CardsInStock[12];
+            CardsInStock.RemoveRange(0, 13);
+            CardsInStock.Add(TrumpCard);
+
+            FirstPlayerCards.Sort();
+            SecondPlayerCards.Sort();
+            #endregion
+
+            #region Определение очерёдности хода
+            var firstPlayerTrumps = FirstPlayerCards.FindAll(x => x.Suit == TrumpCard.Suit);
+            var secondPlayerTrumps = SecondPlayerCards.FindAll(x => x.Suit == TrumpCard.Suit);
+
+            if (firstPlayerTrumps.Count > 0)
+                if (secondPlayerTrumps.Count > 0)
+                    if (firstPlayerTrumps.Min().Value < secondPlayerTrumps.Min().Value)
+                        GameStatus = 1;
+                    else
+                        GameStatus = 2;
+                else
+                    GameStatus = 1;
+            else
+                if (secondPlayerTrumps.Count > 0)
+                    GameStatus = 2;
+                else
+                    GameStatus = rnd.Next(1, 3);
+            #endregion
         }
+
         #endregion
     }
 
-    [DataContract]
-    public class Game
-    {
 
+    [DataContract]
+    public class Card : IComparable<Card>
+    {
+        public enum SuitEnum {heart, diamond, club, spade}
+        public enum ValueEnum {six, seven, eight, nine, ten, jack, queen, king, ace}
+
+        [DataMember]
+        public SuitEnum  Suit  {get; private set;}
+        [DataMember]
+        public ValueEnum Value {get; private set; }
+        
+        public Card(SuitEnum suit, ValueEnum value)
+        {
+            Suit = suit;
+            Value = value;
+        }
+        
+        public int CompareTo(Card other)
+        {
+            return this.Suit.CompareTo(other.Suit) != 0 ? this.Suit.CompareTo(other.Suit) : this.Value.CompareTo(other.Value);
+        }
+
+        public override bool Equals(object obj) => this.Equals(obj as Card);
+
+        public bool Equals(Card c)
+        {
+            return Suit.Equals(c.Suit) && Value.Equals(c.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1625629942;
+            hashCode = hashCode * -1521134295 + Suit.GetHashCode();
+            hashCode = hashCode * -1521134295 + Value.GetHashCode();
+            return hashCode;
+        }
+    }
+
+    [DataContract]
+    public class MoveOpportunity
+    {
+        public enum CanMakeMoveEnum { CanAttack, CanThrow, CanDefend, CanNothing }
+        [DataMember]
+        public CanMakeMoveEnum CanMakeMove { get; private set; }
+
+        public MoveOpportunity(CanMakeMoveEnum CanMakeMove)
+        {
+            this.CanMakeMove = CanMakeMove;
+        }
     }
 }

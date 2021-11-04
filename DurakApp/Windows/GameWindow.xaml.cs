@@ -35,7 +35,25 @@ namespace DurakApp.Windows
             this.userID = userID;
             this.password = password;
             InitializeComponent();
+
+            TestConnect();
         }
         #endregion
+
+        void TestConnect()
+        {
+            var s = client.GetMyCards(RoomName, password, userID);
+            client.GetCardsOnTable(RoomName, password, userID);
+            client.GetCardsInStockCount(RoomName, password, userID);
+            client.GetOpponentCardsCount(RoomName, password, userID);
+            client.GetTrumpCard(RoomName, password, userID);
+            client.GetMoveOpportunity(RoomName, password, userID);
+            
+            client.MakeMove(RoomName, password, userID, s[5], null);
+            client.GetMyCards(RoomName, password, userID);
+            client.GetCardsOnTable(RoomName, password, userID);
+        }
+        
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 using DurakApp.DurakServiceReference;
@@ -35,7 +36,7 @@ namespace DurakApp.Windows
                 label.Content = "";
             else
                 label.Content += ".";
-            if (!client.IsFree(RoomName))
+            if (!client.GetFreeRooms().Any(x => x == RoomName))
             {
                 timer.Stop();
                 DialogResult = true;

@@ -121,6 +121,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\DurakServiceReference\DurakApp.DurakServiceReference.Card.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DurakServiceReference\DurakApp.DurakServiceReference.MoveOpportunity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\DurakServiceReference\DurakService.wsdl" />
     <None Include="Connected Services\DurakServiceReference\DurakService.xsd">
       <SubType>Designer</SubType>
@@ -129,6 +135,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\DurakServiceReference\DurakService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DurakServiceReference\DurakService3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
