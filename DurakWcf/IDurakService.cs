@@ -63,7 +63,7 @@ namespace DurakWcf
         #endregion
 
         #region Game data
-        public int GameStatus                { get; private set; } = 0; //1- первый атакует, 2- второй атакует, 11- первый отбивается, 22- второй отбивается
+        public int GameStatus                { get; set; } = 0;
         public Card TrumpCard                { get; private set; }
         public List<Card> FirstPlayerCards   { get; private set; } = new List<Card>();
         public List<Card> SecondPlayerCards  { get; private set; } = new List<Card>();
@@ -134,6 +134,87 @@ namespace DurakWcf
             #endregion
         }
 
+        public int UncoverdCardsCount()
+        {
+            int cnt = 0;
+            foreach (var c in CardsOnTable) {
+                if (c.Count == 1)
+                    cnt++;
+            }
+            return cnt;
+        }
+
+        public void OffTable()
+        {
+            CardsOnTable = new List<List<Card>>();
+            if (GameStatus == 11) {
+                while (FirstPlayerCards.Count < 6) {
+                    if (CardsInStock.Count == 0)
+                        return;
+                    FirstPlayerCards.Add(CardsInStock[0]);
+                    CardsInStock.RemoveAt(0);
+                }
+                while (SecondPlayerCards.Count < 6) {
+                    if (CardsInStock.Count == 0)
+                        return;
+                    SecondPlayerCards.Add(CardsInStock[0]);
+                    CardsInStock.RemoveAt(0);
+                }
+                GameStatus = 2;
+            }
+            else {
+                while (SecondPlayerCards.Count < 6) {
+                    if (CardsInStock.Count == 0)
+                        return;
+                    SecondPlayerCards.Add(CardsInStock[0]);
+                    CardsInStock.RemoveAt(0);
+                }
+                while (FirstPlayerCards.Count < 6) {
+                    if (CardsInStock.Count == 0)
+                        return;
+                    FirstPlayerCards.Add(CardsInStock[0]);
+                    CardsInStock.RemoveAt(0);
+                }
+                GameStatus = 1;
+            }
+
+            FirstPlayerCards.Sort();
+            SecondPlayerCards.Sort();
+        }
+
+        public void Take()
+        {
+            if (GameStatus == 12) {
+                foreach (var c in CardsOnTable)
+                    FirstPlayerCards.AddRange(c);
+
+                CardsOnTable = new List<List<Card>>();
+
+                while (SecondPlayerCards.Count < 6) {
+                    if (CardsInStock.Count == 0)
+                        return;
+                    SecondPlayerCards.Add(CardsInStock[0]);
+                    CardsInStock.RemoveAt(0);
+                }
+
+                GameStatus = 2;
+            }
+            else {
+                foreach (var c in CardsOnTable)
+                   SecondPlayerCards.AddRange(c);
+
+                CardsOnTable = new List<List<Card>>();
+
+                while (FirstPlayerCards.Count < 6) {
+                    if (CardsInStock.Count == 0)
+                        return;
+                    FirstPlayerCards.Add(CardsInStock[0]);
+                    CardsInStock.RemoveAt(0);
+                }
+
+                GameStatus = 1;
+            }
+        }
         #endregion
     }
 
@@ -179,13 +260,25 @@ namespace DurakWcf
     [DataContract]
     public class MoveOpportunity
     {
-        public enum CanMakeMoveEnum { CanAttack, CanThrow, CanDefend, CanNothing }
+        public enum CanMakeMoveEnum { CanAttack, CanThrow, CanThrowAfter, CanDefend, CanNothing, YouWin, YouLose }
         [DataMember]
         public CanMakeMoveEnum CanMakeMove { get; private set; }
 
         public MoveOpportunity(CanMakeMoveEnum CanMakeMove)
         {
             this.CanMakeMove = CanMakeMove;
+        }
+
+        public override bool Equals(object obj) => this.Equals(obj as MoveOpportunity);
+
+        public bool Equals(MoveOpportunity m)
+        {
+            return CanMakeMove.Equals(m.CanMakeMove);
+        }
+
+        public override int GetHashCode()
+        {
+            return -1714908010 + CanMakeMove.GetHashCode();
         }
     }
 }

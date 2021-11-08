@@ -150,14 +150,22 @@ namespace DurakWcf
                     case 1 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanAttack);
                     case 2 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
                     case 11 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanDefend);
-                    case 22 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrow);
+                    case 12 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
+                    case 21 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrow);
+                    case 22: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrowAfter);
+                    case 10: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouWin);
+                    case 20: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouLose);
                 }
             else
                 switch (GameRooms[index].GameStatus) {
-                    case 11: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanAttack);
+                    case 1: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
+                    case 2: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanAttack);
+                    case 11: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrow);
+                    case 12: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrowAfter);
+                    case 21: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanDefend);
                     case 22: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
-                    case 1: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanDefend);
-                    case 2: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrow);
+                    case 10: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouLose);
+                    case 20: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouWin);
                 }
             return null;
 
@@ -171,19 +179,139 @@ namespace DurakWcf
                 return false;
 
             if (GameRooms[index].FirstPlayerID == PlayerID) {
-                if (GameRooms[index].GameStatus == 1) {
-                    GameRooms[index].FirstPlayerCards.Remove(NewCard);
-                    GameRooms[index].CardsOnTable.Add(new List<Card> {NewCard});
-                    return true;
+                #region Проверка наличия карты
+                var CardIndex = GameRooms[index].FirstPlayerCards.FindIndex(x => x.Equals(NewCard));
+                if (CardIndex == -1)
+                    return false;
+                #endregion
+
+                switch (GameRooms[index].GameStatus) {
+                    #region Атака
+                    case 1:
+                        GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                        GameRooms[index].CardsOnTable.Add(new List<Card> {NewCard});
+                        GameRooms[index].GameStatus = 21;
+                        break;
+                    #endregion
+                    #region Защита
+                    case 11:
+                        if (NewCard == null) {
+                            GameRooms[index].GameStatus = 12;
+                            return true;
+                        }
+
+                        if (TargetCard == null)
+                            return false;
+                        
+                        var TargerCardIndex = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Equals(TargetCard));
+                        if (TargerCardIndex == -1)
+                            return false;
+
+                        if ((NewCard.Suit == TargetCard.Suit && NewCard.Value > TargetCard.Value) || (NewCard.Suit == GameRooms[index].TrumpCard.Suit && NewCard.Suit != TargetCard.Suit)) {
+                            GameRooms[index].CardsOnTable[TargerCardIndex].Add(NewCard);
+                            GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                        }
+                        break;
+                    #endregion
+                    #region Подкидывание
+                    case 21:
+                        #region Бито
+                        if (NewCard == null && GameRooms[index].UncoverdCardsCount() == 0) {
+                            GameRooms[index].OffTable();
+                        }
+                        #endregion
+                        
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value)) == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].SecondPlayerCards.Count)
+                            return false;
+
+                        GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
+                        break;
+                    #endregion
+                    #region Подкидывание вдогонку
+                    case 22:
+                        if (NewCard == null)
+                            GameRooms[index].Take();
+                        
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value)) == -1)
+                            return false;
+
+                        GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
+                        break;
+                        #endregion
                 }
             }
             else {
-                if (GameRooms[index].GameStatus == 2) {
-                    GameRooms[index].SecondPlayerCards.Remove(NewCard);
-                    GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                    return true;
+                #region Проверка наличия карты
+                var CardIndex = GameRooms[index].SecondPlayerCards.FindIndex(x => x.Equals(NewCard));
+                if (CardIndex == -1)
+                    return false;
+                #endregion
+                switch (GameRooms[index].GameStatus) {
+                    #region Атака
+                    case 2:
+                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
+                        GameRooms[index].CardsOnTable.Add(new List<Card> {NewCard});
+                        GameRooms[index].GameStatus = 11;
+                        break;
+                    #endregion
+                    #region Защита
+                    case 21:
+                        if (NewCard == null) {
+                            GameRooms[index].GameStatus = 22;
+                            return true;
+                        }
+
+                        if (TargetCard == null)
+                            return false;
+
+                        var TargerCardIndex = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Equals(TargetCard));
+                        if (TargerCardIndex == -1)
+                            return false;
+
+                        if ((NewCard.Suit == TargetCard.Suit && NewCard.Value > TargetCard.Value) || (NewCard.Suit == GameRooms[index].TrumpCard.Suit && NewCard.Suit != TargetCard.Suit)) {
+                            GameRooms[index].CardsOnTable[TargerCardIndex].Add(NewCard);
+                            GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
+                        }
+                        break;
+                    #endregion
+                    #region Подкидывание
+                    case 11:
+                        #region Бито
+                        if (NewCard == null && GameRooms[index].UncoverdCardsCount() == 0) {
+                            GameRooms[index].OffTable();
+                        }
+                        #endregion
+
+                        var TargerCardInd = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value));
+                        if (TargerCardInd == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].FirstPlayerCards.Count)
+                            return false;
+
+                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
+                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
+                        break;
+                    #endregion
+                    #region Подкидывание вдогонку
+                    case 12:
+                        if (NewCard == null)
+                            GameRooms[index].Take();
+
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value)) == -1)
+                            return false;
+
+                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
+                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
+                        break;
+                        #endregion
                 }
             }
+
+            if (GameRooms[index].FirstPlayerCards.Count == 0)
+                GameRooms[index].GameStatus = 10;
+            if (GameRooms[index].SecondPlayerCards.Count == 0)
+                GameRooms[index].GameStatus = 20;
+
             return false;
         }
         #endregion
