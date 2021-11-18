@@ -21,13 +21,13 @@ namespace DurakWcf
             int index = FreeRooms.FindIndex(x => x.RoomName == RoomName);
             return FreeRooms[index].password.Length > 0;
         }
-        
+
         public bool ConnectRoom(string RoomName, string password, int PlayerId)
         {
             int index = FreeRooms.FindIndex(x => x.RoomName == RoomName);
             if (index == -1)
                 return false;
-            
+
             if (FreeRooms[index].password == password) {
                 if (!FreeRooms[index].AddSecondPlayerID(PlayerId))
                     return false;
@@ -51,20 +51,18 @@ namespace DurakWcf
         {
             int index = FreeRooms.FindIndex(x => x.RoomName == RoomName);
             if (index != -1)
-                if (FreeRooms[index].password == password && ((FreeRooms[index].FirstPlayerID == PlayerID) || (FreeRooms[index].SecondPlayerID == PlayerID)))
-                {
+                if (FreeRooms[index].password == password && ((FreeRooms[index].FirstPlayerID == PlayerID) || (FreeRooms[index].SecondPlayerID == PlayerID))) {
                     FreeRooms.RemoveAt(index);
                     return true;
                 }
-            
+
             index = GameRooms.FindIndex(x => x.RoomName == RoomName);
             if (index != -1)
-                if (GameRooms[index].password == password && ((GameRooms[index].FirstPlayerID == PlayerID) || (GameRooms[index].SecondPlayerID == PlayerID)))
-                {
+                if (GameRooms[index].password == password && ((GameRooms[index].FirstPlayerID == PlayerID) || (GameRooms[index].SecondPlayerID == PlayerID))) {
                     GameRooms.RemoveAt(index);
                     return true;
                 }
-            
+
             return false;
         }
 
@@ -99,7 +97,7 @@ namespace DurakWcf
             if (index == -1 || GameRooms[index].password != password ||
                 (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
                 return null;
-            
+
             return GameRooms[index].CardsOnTable;
         }
 
@@ -147,11 +145,11 @@ namespace DurakWcf
 
             if (GameRooms[index].FirstPlayerID == PlayerID)
                 switch (GameRooms[index].GameStatus) {
-                    case 1 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanAttack);
-                    case 2 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
-                    case 11 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanDefend);
-                    case 12 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
-                    case 21 : return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrow);
+                    case 1: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanAttack);
+                    case 2: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
+                    case 11: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanDefend);
+                    case 12: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
+                    case 21: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrow);
                     case 22: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanThrowAfter);
                     case 10: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouWin);
                     case 20: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouLose);
@@ -166,6 +164,7 @@ namespace DurakWcf
                     case 22: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.CanNothing);
                     case 10: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouLose);
                     case 20: return new MoveOpportunity(MoveOpportunity.CanMakeMoveEnum.YouWin);
+
                 }
             return null;
 
@@ -174,13 +173,12 @@ namespace DurakWcf
         public bool MakeMove(string RoomName, string password, int PlayerID, Card NewCard, Card TargetCard)
         {
             int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
+            if (index == -1 || GameRooms[index].password != password || (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
                 return false;
 
             if (GameRooms[index].FirstPlayerID == PlayerID) {
                 #region Проверка наличия карты
-                var CardIndex = GameRooms[index].FirstPlayerCards.FindIndex(x => x.Equals(NewCard));
+                var CardIndex = (NewCard == null) ? -2 : GameRooms[index].FirstPlayerCards.FindIndex(x => x.Equals(NewCard));
                 if (CardIndex == -1)
                     return false;
                 #endregion
@@ -189,7 +187,7 @@ namespace DurakWcf
                     #region Атака
                     case 1:
                         GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> {NewCard});
+                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
                         GameRooms[index].GameStatus = 21;
                         break;
                     #endregion
@@ -202,7 +200,7 @@ namespace DurakWcf
 
                         if (TargetCard == null)
                             return false;
-                        
+
                         var TargerCardIndex = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Equals(TargetCard));
                         if (TargerCardIndex == -1)
                             return false;
@@ -220,8 +218,8 @@ namespace DurakWcf
                             GameRooms[index].OffTable();
                         }
                         #endregion
-                        
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value)) == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].SecondPlayerCards.Count)
+
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value)) == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].SecondPlayerCards.Count)
                             return false;
 
                         GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
@@ -232,8 +230,8 @@ namespace DurakWcf
                     case 22:
                         if (NewCard == null)
                             GameRooms[index].Take();
-                        
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value)) == -1)
+
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value)) == -1)
                             return false;
 
                         GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
@@ -244,7 +242,7 @@ namespace DurakWcf
             }
             else {
                 #region Проверка наличия карты
-                var CardIndex = GameRooms[index].SecondPlayerCards.FindIndex(x => x.Equals(NewCard));
+                var CardIndex = (NewCard == null) ? -2 : GameRooms[index].SecondPlayerCards.FindIndex(x => x.Equals(NewCard));
                 if (CardIndex == -1)
                     return false;
                 #endregion
@@ -252,7 +250,7 @@ namespace DurakWcf
                     #region Атака
                     case 2:
                         GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> {NewCard});
+                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
                         GameRooms[index].GameStatus = 11;
                         break;
                     #endregion
@@ -284,7 +282,7 @@ namespace DurakWcf
                         }
                         #endregion
 
-                        var TargerCardInd = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value));
+                        var TargerCardInd = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value));
                         if (TargerCardInd == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].FirstPlayerCards.Count)
                             return false;
 
@@ -297,7 +295,7 @@ namespace DurakWcf
                         if (NewCard == null)
                             GameRooms[index].Take();
 
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(TargetCard.Value)) == -1)
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value)) == -1)
                             return false;
 
                         GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);

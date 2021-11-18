@@ -15,7 +15,7 @@ namespace DurakWcf
         #region Room methods
         [OperationContract]
         bool HasPassword(string RoomName);
-        
+
         [OperationContract]
         bool CreateRoom(string RoomName, string password, int UserID);
 
@@ -56,18 +56,18 @@ namespace DurakWcf
     public class Room
     {
         #region Room data
-        public int FirstPlayerID  { get; private set; }
+        public int FirstPlayerID { get; private set; }
         public int SecondPlayerID { get; private set; }
-        public string RoomName    { get; private set; }
-        public string password    { get; private set; }
+        public string RoomName { get; private set; }
+        public string password { get; private set; }
         #endregion
 
         #region Game data
-        public int GameStatus                { get; set; } = 0;
-        public Card TrumpCard                { get; private set; }
-        public List<Card> FirstPlayerCards   { get; private set; } = new List<Card>();
-        public List<Card> SecondPlayerCards  { get; private set; } = new List<Card>();
-        public List<Card> CardsInStock       { get; private set; } = new List<Card>();
+        public int GameStatus { get; set; } = 0;
+        public Card TrumpCard { get; private set; }
+        public List<Card> FirstPlayerCards { get; private set; } = new List<Card>();
+        public List<Card> SecondPlayerCards { get; private set; } = new List<Card>();
+        public List<Card> CardsInStock { get; private set; } = new List<Card>();
         public List<List<Card>> CardsOnTable { get; private set; } = new List<List<Card>>();
         #endregion
 
@@ -128,9 +128,9 @@ namespace DurakWcf
                     GameStatus = 1;
             else
                 if (secondPlayerTrumps.Count > 0)
-                    GameStatus = 2;
-                else
-                    GameStatus = rnd.Next(1, 3);
+                GameStatus = 2;
+            else
+                GameStatus = rnd.Next(1, 3);
             #endregion
         }
 
@@ -160,7 +160,7 @@ namespace DurakWcf
                     SecondPlayerCards.Add(CardsInStock[0]);
                     CardsInStock.RemoveAt(0);
                 }
-                GameStatus = 2;
+                GameStatus = 1;
             }
             else {
                 while (SecondPlayerCards.Count < 6) {
@@ -175,7 +175,7 @@ namespace DurakWcf
                     FirstPlayerCards.Add(CardsInStock[0]);
                     CardsInStock.RemoveAt(0);
                 }
-                GameStatus = 1;
+                GameStatus = 2;
             }
 
             FirstPlayerCards.Sort();
@@ -201,7 +201,7 @@ namespace DurakWcf
             }
             else {
                 foreach (var c in CardsOnTable)
-                   SecondPlayerCards.AddRange(c);
+                    SecondPlayerCards.AddRange(c);
 
                 CardsOnTable = new List<List<Card>>();
 
@@ -222,20 +222,20 @@ namespace DurakWcf
     [DataContract]
     public class Card : IComparable<Card>
     {
-        public enum SuitEnum {heart, diamond, club, spade}
-        public enum ValueEnum {six, seven, eight, nine, ten, jack, queen, king, ace}
+        public enum SuitEnum { heart, diamond, club, spade }
+        public enum ValueEnum { six, seven, eight, nine, ten, jack, queen, king, ace }
 
         [DataMember]
-        public SuitEnum  Suit  {get; private set;}
+        public SuitEnum Suit { get; private set; }
         [DataMember]
-        public ValueEnum Value {get; private set; }
-        
+        public ValueEnum Value { get; private set; }
+
         public Card(SuitEnum suit, ValueEnum value)
         {
             Suit = suit;
             Value = value;
         }
-        
+
         public int CompareTo(Card other)
         {
             return this.Suit.CompareTo(other.Suit) != 0 ? this.Suit.CompareTo(other.Suit) : this.Value.CompareTo(other.Value);
@@ -245,6 +245,7 @@ namespace DurakWcf
 
         public bool Equals(Card c)
         {
+            if (this == null && c == null) return false;
             return Suit.Equals(c.Suit) && Value.Equals(c.Value);
         }
 

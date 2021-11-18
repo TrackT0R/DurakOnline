@@ -52,8 +52,11 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="CanAttack" />
       <xs:enumeration value="CanThrow" />
+      <xs:enumeration value="CanThrowAfter" />
       <xs:enumeration value="CanDefend" />
       <xs:enumeration value="CanNothing" />
+      <xs:enumeration value="YouWin" />
+      <xs:enumeration value="YouLose" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="MoveOpportunity.CanMakeMoveEnum" nillable="true" type="tns:MoveOpportunity.CanMakeMoveEnum" />

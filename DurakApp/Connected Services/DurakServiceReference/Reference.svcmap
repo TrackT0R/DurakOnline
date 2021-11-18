@@ -19,15 +19,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:60871/DurakService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://uryvchikov.ru/durakservice/DurakService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="DurakService.xsd" MetadataType="Schema" ID="beecf06d-ed7b-4ae4-88dc-ee1b987acbfc" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd1" />
-    <MetadataFile FileName="DurakService1.xsd" MetadataType="Schema" ID="c4be2068-ef1a-442a-b890-5b5e1fccce16" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd0" />
-    <MetadataFile FileName="DurakService3.xsd" MetadataType="Schema" ID="e8450c2c-52ac-4bd6-8a15-2251f44d8eba" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd3" />
-    <MetadataFile FileName="DurakService2.xsd" MetadataType="Schema" ID="78a4ebef-fd5d-4b16-b11f-34add13e843b" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?xsd=xsd2" />
-    <MetadataFile FileName="DurakService.wsdl" MetadataType="Wsdl" ID="b3c9fc76-5773-473f-add4-34914d3eb931" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?wsdl" />
-    <MetadataFile FileName="DurakService.disco" MetadataType="Disco" ID="13df13a5-c043-47f4-ae1a-490638a96dca" SourceId="1" SourceUrl="http://localhost:60871/DurakService.svc?disco" />
+    <MetadataFile FileName="DurakService4.xsd" MetadataType="Schema" ID="8a4232d4-ebc4-4cf1-a6e2-9e02b0b980a7" SourceId="1" SourceUrl="http://uryvchikov.ru/DurakService/DurakService.svc?xsd=xsd2" />
+    <MetadataFile FileName="DurakService41.xsd" MetadataType="Schema" ID="780a53df-8997-41ea-af0a-8f55e2ddac95" SourceId="1" SourceUrl="http://uryvchikov.ru/DurakService/DurakService.svc?xsd=xsd3" />
+    <MetadataFile FileName="DurakService1.wsdl" MetadataType="Wsdl" ID="5aafea33-4eb6-4b01-b403-7f983c82ee65" SourceId="1" SourceUrl="http://uryvchikov.ru/DurakService/DurakService.svc?wsdl" />
+    <MetadataFile FileName="DurakService42.xsd" MetadataType="Schema" ID="22a3cd52-848f-48e5-82d8-399fc64c8686" SourceId="1" SourceUrl="http://uryvchikov.ru/DurakService/DurakService.svc?xsd=xsd1" />
+    <MetadataFile FileName="DurakService1.disco" MetadataType="Disco" ID="773c2c56-e8a2-459f-9412-33fa98f3ce51" SourceId="1" SourceUrl="http://uryvchikov.ru/DurakService/DurakService.svc?disco" />
+    <MetadataFile FileName="DurakService43.xsd" MetadataType="Schema" ID="50220cf4-5f5b-4a06-9b4d-a1ee5e4cf4e3" SourceId="1" SourceUrl="http://uryvchikov.ru/DurakService/DurakService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

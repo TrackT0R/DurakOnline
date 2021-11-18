@@ -178,10 +178,19 @@ namespace DurakApp.DurakServiceReference {
             CanThrow = 1,
             
             [System.Runtime.Serialization.EnumMemberAttribute()]
-            CanDefend = 2,
+            CanThrowAfter = 2,
             
             [System.Runtime.Serialization.EnumMemberAttribute()]
-            CanNothing = 3,
+            CanDefend = 3,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            CanNothing = 4,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            YouWin = 5,
+            
+            [System.Runtime.Serialization.EnumMemberAttribute()]
+            YouLose = 6,
         }
     }
     
