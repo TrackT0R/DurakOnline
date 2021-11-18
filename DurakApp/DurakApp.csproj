@@ -172,50 +172,52 @@
   <ItemGroup>
     <None Include="Connected Services\DurakServiceReference\DurakService.disco" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Cards\Club\ace.jpg" />
-    <Resource Include="Cards\Club\eight.jpg" />
-    <Resource Include="Cards\Club\jack.jpg" />
-    <Resource Include="Cards\Club\king.jpg" />
-    <Resource Include="Cards\Club\nine.jpg" />
-    <Resource Include="Cards\Club\queen.jpg" />
-    <Resource Include="Cards\Club\seven.jpg" />
-    <Resource Include="Cards\Club\six.jpg" />
-    <Resource Include="Cards\Club\ten.jpg" />
+    <Resource Include="images\white.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Cards\Diamond\ace.jpg" />
-    <Resource Include="Cards\Diamond\eight.jpg" />
-    <Resource Include="Cards\Diamond\jack.jpg" />
-    <Resource Include="Cards\Diamond\king.jpg" />
-    <Resource Include="Cards\Diamond\nine.jpg" />
-    <Resource Include="Cards\Diamond\queen.jpg" />
-    <Resource Include="Cards\Diamond\seven.jpg" />
-    <Resource Include="Cards\Diamond\six.jpg" />
-    <Resource Include="Cards\Diamond\ten.jpg" />
+    <Resource Include="Cards\club\ace.jpg" />
+    <Resource Include="Cards\club\eight.jpg" />
+    <Resource Include="Cards\club\jack.jpg" />
+    <Resource Include="Cards\club\king.jpg" />
+    <Resource Include="Cards\club\nine.jpg" />
+    <Resource Include="Cards\club\queen.jpg" />
+    <Resource Include="Cards\club\seven.jpg" />
+    <Resource Include="Cards\club\six.jpg" />
+    <Resource Include="Cards\club\ten.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Cards\Heart\ace.jpg" />
-    <Resource Include="Cards\Heart\eight.jpg" />
-    <Resource Include="Cards\Heart\jack.jpg" />
-    <Resource Include="Cards\Heart\king.jpg" />
-    <Resource Include="Cards\Heart\nine.jpg" />
-    <Resource Include="Cards\Heart\queen.jpg" />
-    <Resource Include="Cards\Heart\seven.jpg" />
-    <Resource Include="Cards\Heart\six.jpg" />
-    <Resource Include="Cards\Heart\ten.jpg" />
+    <Resource Include="Cards\diamond\ace.jpg" />
+    <Resource Include="Cards\diamond\eight.jpg" />
+    <Resource Include="Cards\diamond\jack.jpg" />
+    <Resource Include="Cards\diamond\king.jpg" />
+    <Resource Include="Cards\diamond\nine.jpg" />
+    <Resource Include="Cards\diamond\queen.jpg" />
+    <Resource Include="Cards\diamond\seven.jpg" />
+    <Resource Include="Cards\diamond\six.jpg" />
+    <Resource Include="Cards\diamond\ten.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Cards\Spade\ace.jpg" />
-    <Resource Include="Cards\Spade\eight.jpg" />
-    <Resource Include="Cards\Spade\jack.jpg" />
-    <Resource Include="Cards\Spade\king.jpg" />
-    <Resource Include="Cards\Spade\nine.jpg" />
-    <Resource Include="Cards\Spade\queen.jpg" />
-    <Resource Include="Cards\Spade\seven.jpg" />
-    <Resource Include="Cards\Spade\six.jpg" />
-    <Resource Include="Cards\Spade\ten.jpg" />
+    <Resource Include="Cards\heart\ace.jpg" />
+    <Resource Include="Cards\heart\eight.jpg" />
+    <Resource Include="Cards\heart\jack.jpg" />
+    <Resource Include="Cards\heart\king.jpg" />
+    <Resource Include="Cards\heart\nine.jpg" />
+    <Resource Include="Cards\heart\queen.jpg" />
+    <Resource Include="Cards\heart\seven.jpg" />
+    <Resource Include="Cards\heart\six.jpg" />
+    <Resource Include="Cards\heart\ten.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Cards\spade\ace.jpg" />
+    <Resource Include="Cards\spade\eight.jpg" />
+    <Resource Include="Cards\spade\jack.jpg" />
+    <Resource Include="Cards\spade\king.jpg" />
+    <Resource Include="Cards\spade\nine.jpg" />
+    <Resource Include="Cards\spade\queen.jpg" />
+    <Resource Include="Cards\spade\seven.jpg" />
+    <Resource Include="Cards\spade\six.jpg" />
+    <Resource Include="Cards\spade\ten.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
