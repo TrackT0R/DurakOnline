@@ -127,17 +127,17 @@
     <None Include="Connected Services\DurakServiceReference\DurakApp.DurakServiceReference.MoveOpportunity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\DurakServiceReference\DurakService1.wsdl" />
-    <None Include="Connected Services\DurakServiceReference\DurakService4.xsd">
+    <None Include="Connected Services\DurakServiceReference\DurakService.wsdl" />
+    <None Include="Connected Services\DurakServiceReference\DurakService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DurakServiceReference\DurakService41.xsd">
+    <None Include="Connected Services\DurakServiceReference\DurakService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DurakServiceReference\DurakService42.xsd">
+    <None Include="Connected Services\DurakServiceReference\DurakService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\DurakServiceReference\DurakService43.xsd">
+    <None Include="Connected Services\DurakServiceReference\DurakService3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
@@ -167,10 +167,55 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\DurakServiceReference\DurakService1.disco" />
+    <Resource Include="images\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\icon.png" />
+    <None Include="Connected Services\DurakServiceReference\DurakService.disco" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Cards\Club\ace.jpg" />
+    <Resource Include="Cards\Club\eight.jpg" />
+    <Resource Include="Cards\Club\jack.jpg" />
+    <Resource Include="Cards\Club\king.jpg" />
+    <Resource Include="Cards\Club\nine.jpg" />
+    <Resource Include="Cards\Club\queen.jpg" />
+    <Resource Include="Cards\Club\seven.jpg" />
+    <Resource Include="Cards\Club\six.jpg" />
+    <Resource Include="Cards\Club\ten.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Cards\Diamond\ace.jpg" />
+    <Resource Include="Cards\Diamond\eight.jpg" />
+    <Resource Include="Cards\Diamond\jack.jpg" />
+    <Resource Include="Cards\Diamond\king.jpg" />
+    <Resource Include="Cards\Diamond\nine.jpg" />
+    <Resource Include="Cards\Diamond\queen.jpg" />
+    <Resource Include="Cards\Diamond\seven.jpg" />
+    <Resource Include="Cards\Diamond\six.jpg" />
+    <Resource Include="Cards\Diamond\ten.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Cards\Heart\ace.jpg" />
+    <Resource Include="Cards\Heart\eight.jpg" />
+    <Resource Include="Cards\Heart\jack.jpg" />
+    <Resource Include="Cards\Heart\king.jpg" />
+    <Resource Include="Cards\Heart\nine.jpg" />
+    <Resource Include="Cards\Heart\queen.jpg" />
+    <Resource Include="Cards\Heart\seven.jpg" />
+    <Resource Include="Cards\Heart\six.jpg" />
+    <Resource Include="Cards\Heart\ten.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Cards\Spade\ace.jpg" />
+    <Resource Include="Cards\Spade\eight.jpg" />
+    <Resource Include="Cards\Spade\jack.jpg" />
+    <Resource Include="Cards\Spade\king.jpg" />
+    <Resource Include="Cards\Spade\nine.jpg" />
+    <Resource Include="Cards\Spade\queen.jpg" />
+    <Resource Include="Cards\Spade\seven.jpg" />
+    <Resource Include="Cards\Spade\six.jpg" />
+    <Resource Include="Cards\Spade\ten.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

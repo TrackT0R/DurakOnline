@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace DurakApp.Windows
@@ -34,10 +35,21 @@ namespace DurakApp.Windows
             this.password = password;
             InitializeComponent();
             TrumpButton.Content = client.GetTrumpCard(RoomName, password, userID).Suit + " " + client.GetTrumpCard(RoomName, password, userID).Value;
-            timer.Tick += new EventHandler(timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 1);
-            timer.Start();
+            Image image = new Image(); //чтобы присваивать изображения кнопкам
+            image.Source = new BitmapImage(new Uri(@"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\Heart\6_diamonds_svg.jpg"));// то устанавливается ссылка на изображение 1
+            StockButton.Content = image;
+            foreach(var button in HandGrid.Children.OfType<Button>())
+            {
+                Image image1 = new Image(); //чтобы присваивать изображения кнопкам
+                image1.Source = new BitmapImage(new Uri(@"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\Heart\icon6.jpg"));// то устанавливается ссылка на изображение 1
+                button.Content = image1;
+            }
+            Image image2 = new Image(); //чтобы присваивать изображения кнопкам
+            image2.Source = new BitmapImage(new Uri(@"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\Heart\6_diamonds_svg.jpg"));
+            int b = 0;
 
+            
+            
 
         }
         #endregion
@@ -139,11 +151,11 @@ namespace DurakApp.Windows
             TestButton.Content = client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString();
             foreach (var button in TableGrid.Children.OfType<Button>())//Чистка карт на столе
             {
-                button.Content = "";
+                button.Name = "";
             }
             foreach (var button in TableGrid2.Children.OfType<Button>())//Чистка карт на столе
             {
-                button.Content = "";
+                button.Name = "";
             }
 
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanDefend") {
@@ -156,7 +168,7 @@ namespace DurakApp.Windows
                         i = 0;
                         break;
                     }
-                    button.Content = client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value;
+                    button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value;
                     i++;
                 }
                 foreach (var button in TableGrid2.Children.OfType<Button>()) {
@@ -164,7 +176,7 @@ namespace DurakApp.Windows
                         i = 0;
                         break;
                     }
-                    button.Content = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
+                    button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
                     i++;
                 }
             }
@@ -178,7 +190,7 @@ namespace DurakApp.Windows
                         i = 0;
                         break;
                     }
-                    button.Content = client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value;
+                    button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value;
                     i++;
                 }
                 foreach (var button in TableGrid.Children.OfType<Button>()) {
@@ -186,13 +198,13 @@ namespace DurakApp.Windows
                         i = 0;
                         break;
                     }
-                    button.Content = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
+                    button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + " " + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
                     i++;
                 }
             }
             foreach (var button in HandGrid.Children.OfType<Button>())//Чистка карт в руке
             {
-                button.Content = "";
+                button.Name = "";
             }
             foreach (var button in HandGrid.Children.OfType<Button>())//Обновление карт в руке
             {
@@ -200,7 +212,7 @@ namespace DurakApp.Windows
                     i = 0;
                     break;
                 }
-                button.Content = client.GetMyCards(RoomName, password, userID)[i].Suit + " " + client.GetMyCards(RoomName, password, userID)[i].Value;
+                button.Name = client.GetMyCards(RoomName, password, userID)[i].Suit + " " + client.GetMyCards(RoomName, password, userID)[i].Value;
                 i++;
             }
 
