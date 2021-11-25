@@ -34,10 +34,8 @@ namespace DurakApp.Windows
             this.userID = userID;
             this.password = password;
             InitializeComponent();
-            TrumpButton.Content = client.GetTrumpCard(RoomName, password, userID).Suit + " " + client.GetTrumpCard(RoomName, password, userID).Value;
-            Image image = new Image(); //чтобы присваивать изображения кнопкам
-            image.Source = new BitmapImage(new Uri(@"C:\Users\79806\source\repos\DurakOnline\DurakApp\Cards\spade\king.jpg"));// то устанавливается ссылка на изображение 1
-            StockButton.Content = image;
+            TrumpButton.Source = new BitmapImage(new Uri(@"pack://application:,,,/Cards/" + client.GetTrumpCard(RoomName, password, userID).Suit.ToString() + @"/" + client.GetTrumpCard(RoomName, password, userID).Value.ToString() + ".jpg"));
+            Rubashka.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/Rubashka.jpg"));
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Start();
@@ -143,14 +141,14 @@ namespace DurakApp.Windows
             {
                 button.Name = "";
                 Image image = new Image(); //чтобы присваивать изображения кнопкам
-                image.Source = new BitmapImage(new Uri(@"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\images\white.jpg"));
+                image.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/white.jpg"));
                 button.Content = image;
             }
             foreach (var button in TableGrid2.Children.OfType<Button>())//Чистка карт на столе
             {
                 button.Name = "";
                 Image image = new Image(); //чтобы присваивать изображения кнопкам
-                image.Source = new BitmapImage(new Uri(@"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\images\white.jpg"));
+                image.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/white.jpg"));
                 button.Content = image;
             }
 
@@ -165,7 +163,7 @@ namespace DurakApp.Windows
                         break;
                     }
                     button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + "_" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value;
-                    string str = @"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + @"\" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value + ".jpg";
+                    string str = @"pack://application:,,,/Cards/" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + @"/" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value + ".jpg";
                     Image image = new Image(); //чтобы присваивать изображения кнопкам
                     image.Source = new BitmapImage(new Uri(str));
                     button.Content = image; 
@@ -177,7 +175,7 @@ namespace DurakApp.Windows
                         break;
                     }
                     button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + "_" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
-                    string str = @"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + @"\" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value + ".jpg";
+                    string str = @"pack://application:,,,/Cards/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + @"/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value + ".jpg";
                     Image image = new Image(); //чтобы присваивать изображения кнопкам
                     image.Source = new BitmapImage(new Uri(str));
                     button.Content = image;
@@ -195,7 +193,7 @@ namespace DurakApp.Windows
                         break;
                     }
                     button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + "_" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value;
-                    string str = @"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + @"\" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value + ".jpg";
+                    string str = @"pack://application:,,,/Cards/" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Suit + @"/" + client.GetCardsOnTable(RoomName, password, userID)[i][0].Value + ".jpg";
                     Image image = new Image(); //чтобы присваивать изображения кнопкам
                     image.Source = new BitmapImage(new Uri(str));
                     button.Content = image;
@@ -207,7 +205,7 @@ namespace DurakApp.Windows
                         break;
                     }
                     button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + "_" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
-                    string str = @"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + @"\" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value + ".jpg";
+                    string str = @"pack://application:,,,/Cards/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + @"/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value + ".jpg";
                     Image image = new Image(); //чтобы присваивать изображения кнопкам
                     image.Source = new BitmapImage(new Uri(str));
                     button.Content = image;
@@ -217,6 +215,7 @@ namespace DurakApp.Windows
             foreach (var button in HandGrid.Children.OfType<Button>())//Чистка карт в руке
             {
                 button.Name = "";
+                button.Content = "";
             }
             foreach (var button in HandGrid.Children.OfType<Button>())//Обновление карт в руке
             {
@@ -225,7 +224,7 @@ namespace DurakApp.Windows
                     break;
                 }
                 button.Name = client.GetMyCards(RoomName, password, userID)[i].Suit + "_" + client.GetMyCards(RoomName, password, userID)[i].Value;
-                string str = @"C:\Users\79806\Source\Repos\DurakOnline\DurakApp\Cards\" + client.GetMyCards(RoomName, password, userID)[i].Suit + @"\" + client.GetMyCards(RoomName, password, userID)[i].Value + ".jpg";
+                string str = @"pack://application:,,,/Cards/" + client.GetMyCards(RoomName, password, userID)[i].Suit + @"/" + client.GetMyCards(RoomName, password, userID)[i].Value + ".jpg";
                 Image image = new Image(); //чтобы присваивать изображения кнопкам
                 image.Source = new BitmapImage(new Uri(str));
                 button.Content = image;

@@ -13,7 +13,7 @@
             <ColumnDefinition Width="45*"/>
             <ColumnDefinition Width="160*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="TableGrid" HorizontalAlignment="Left" Height="84" Margin="69,96,0,0" VerticalAlignment="Top" Width="655" Grid.ColumnSpan="2">
+        <Grid x:Name="TableGrid" HorizontalAlignment="Left" Height="126" Margin="34,68,0,0" VerticalAlignment="Top" Width="717" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
@@ -25,21 +25,21 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="0" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137" Margin="0,0,0,0.2">
             </Button>
-            <Button Grid.Column="1" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="1" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="2" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="2" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="3" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="3" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="4" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="4" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="5" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="5" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
 
         </Grid>
-        <Grid x:Name="HandGrid" HorizontalAlignment="Left" Height="79" Margin="69,450,0,0" VerticalAlignment="Top" Width="655" Grid.ColumnSpan="2">
+        <Grid x:Name="HandGrid" HorizontalAlignment="Left" Height="118" Margin="34,427,0,0" VerticalAlignment="Top" Width="717" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
@@ -55,34 +55,33 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="0" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="1" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="1" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="2" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="2" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="3" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="3" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="4" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="4" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="5" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="5" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="6" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="6" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="7" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="7" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="8" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="8" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="9" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="9" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
 
         </Grid>
-        <Button x:Name="OponentCardsCount" Content="" IsEnabled="False" HorizontalAlignment="Left" Height="53" Margin="196.431,21,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.946,0.527" Grid.Column="1"/>
+        <Button x:Name="OponentCardsCount" Background="#FF1AB137" Content="" IsEnabled="True" HorizontalAlignment="Left" Height="53" Margin="211.2,10,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.946,0.527" Grid.Column="1"/>
         <Button x:Name="BitoButton" Content="Bito" HorizontalAlignment="Left" Height="47" Margin="644.431,311,0,0" VerticalAlignment="Top" Width="120" Click="BitoButton_Click" Grid.Column="1"/>
         <Button x:Name="TakeButton" Content="Take" HorizontalAlignment="Left" Height="44" Margin="644.431,379,0,0" VerticalAlignment="Top" Width="120" Click="TakeButton_Click" Grid.Column="1"/>
-        <Button x:Name="StockButton" Content=""  HorizontalAlignment="Left" Height="72" Margin="723.431,183,0,0" VerticalAlignment="Top" Width="41" Background="White" IsEnabled="False" Grid.Column="1"/>
-        <Button x:Name="TrumpButton" Content="" IsEnabled="False" HorizontalAlignment="Left" Height="144" Margin="764.431,152,0,0" VerticalAlignment="Top" Width="58" Background="#FF821313" BorderBrush="#FFD33A3A" Foreground="#FFC53333" Grid.Column="1"/>
-        <Grid x:Name="TableGrid2" HorizontalAlignment="Left" Height="86" Margin="69,199,0,0" VerticalAlignment="Top" Width="655" Grid.ColumnSpan="2">
+        <Button x:Name="StockButton"  Content=""  HorizontalAlignment="Left" Height="35" Margin="675.2,110,0,0" VerticalAlignment="Top" Width="84" Background="#FF1AB137" IsEnabled="True" Grid.Column="1" Foreground="Black"/>
+        <Grid x:Name="TableGrid2" HorizontalAlignment="Left" Height="125" Margin="34,199,0,0" VerticalAlignment="Top" Width="717" Grid.ColumnSpan="2" >
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
@@ -94,20 +93,22 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="0" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="1" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="1" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="2" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="2" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="3" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="3" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="4" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="4" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
-            <Button Grid.Column="5" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137">
+            <Button Grid.Column="5" Grid.Row="0" MouseDown = "Button_MouseDown" Background="#FF1AB137" BorderBrush="#FF1AB137">
             </Button>
         </Grid>
         <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Height="28" Margin="644.431,501,0,0" VerticalAlignment="Top" Width="120" Click="RefreshButton_Click" Grid.Column="1" Visibility="Hidden"/>
-        <Button x:Name="TestButton" Content="" HorizontalAlignment="Left" Height="38" Margin="658.431,59,0,0" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
+        <Button x:Name="TestButton" Content="" HorizontalAlignment="Left" Height="38" Margin="678.2,10,0,0" VerticalAlignment="Top" Width="86" Grid.Column="1"/>
+        <Image x:Name="TrumpButton" Grid.Column="1" HorizontalAlignment="Left" Height="161" Margin="764.2,145,0,0" VerticalAlignment="Top" Width="78"/>
+        <Image x:Name="Rubashka" Grid.Column="1" HorizontalAlignment="Left" Height="161" Margin="675.2,145,0,0" VerticalAlignment="Top" Width="84" />
     </Grid>
 </Window>

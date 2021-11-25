@@ -219,5 +219,8 @@
     <Resource Include="Cards\spade\six.jpg" />
     <Resource Include="Cards\spade\ten.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\Rubashka.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
