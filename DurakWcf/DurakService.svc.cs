@@ -219,7 +219,7 @@ namespace DurakWcf
                         }
                         #endregion
 
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value)) == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].SecondPlayerCards.Count)
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1  || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].SecondPlayerCards.Count)
                             return false;
 
                         GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
@@ -231,7 +231,7 @@ namespace DurakWcf
                         if (NewCard == null)
                             GameRooms[index].Take();
 
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value)) == -1)
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1)
                             return false;
 
                         GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
@@ -282,8 +282,7 @@ namespace DurakWcf
                         }
                         #endregion
 
-                        var TargerCardInd = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value));
-                        if (TargerCardInd == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].FirstPlayerCards.Count)
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].FirstPlayerCards.Count)
                             return false;
 
                         GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
@@ -295,7 +294,7 @@ namespace DurakWcf
                         if (NewCard == null)
                             GameRooms[index].Take();
 
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value)) == -1)
+                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1)
                             return false;
 
                         GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
