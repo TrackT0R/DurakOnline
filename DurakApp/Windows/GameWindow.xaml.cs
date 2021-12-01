@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -19,12 +20,15 @@ namespace DurakApp.Windows
         private string RoomName { get; set; }
         private int userID { get; set; }
         private string password { get; set; }
-        #endregion
 
         string first = ""; // эта штука понадобится, объяснения будут ниже
         string second = ""; // тоже понадобится
         Button firstClicked = null; // Это ссылочная переменная!!!!!!!!! Она не добавляет новую кнопку в wpf, т.к не использует ключевое слово new и объект тем самым не создается
         Button secondClicked = null; // Тоже ссылочная переменная. Они будут ссылаться на наши кнопки, на которые мы кликаем
+
+        #endregion
+
+
 
         #region Initialization
         public GameWindow(DurakServiceClient client, string RoomName, int userID, string password)
@@ -73,6 +77,10 @@ namespace DurakApp.Windows
                 if (firstClicked == null) {
                     firstClicked = clickButton;
                     first = firstClicked.Name.ToString();
+                    timer.Stop();
+                    BitoButton.IsEnabled = false;
+                    TakeButton.IsEnabled = false;
+                    HandGrid.IsEnabled = false;
                     return;
                 }
                 if (secondClicked == null) {
@@ -121,6 +129,8 @@ namespace DurakApp.Windows
                     firstClicked = null;
                     second = "";
                     secondClicked = null;
+                    HandGrid.IsEnabled = true;
+                    timer.Start();
                     return;
 
                 }
@@ -133,30 +143,77 @@ namespace DurakApp.Windows
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            
+
+            TableGrid.ColumnDefinitions.Clear();
+            TableGrid2.ColumnDefinitions.Clear();
+            TableGrid.Children.Clear();
+            TableGrid2.Children.Clear();
+            ColumnDefinition cd;
+            for (int j = 0; j < client.GetCardsOnTable(RoomName, password, userID).Count() + 1; j++)
+            {
+                cd = new ColumnDefinition();
+                TableGrid.ColumnDefinitions.Add(cd);
+            }
+
+            for (int j = 0; j < client.GetCardsOnTable(RoomName, password, userID).Count() + 1; j++)
+            {
+                cd = new ColumnDefinition();
+                TableGrid2.ColumnDefinitions.Add(cd);
+            }
+
+            Button nb;
+            for (int j = 0; j < client.GetCardsOnTable(RoomName, password, userID).Count() + 1; j++)
+            {
+                nb = new Button();
+                nb.PreviewMouseLeftButtonDown += Button_MouseDown;
+                nb.MouseEnter += Enter_Button;
+                nb.MouseLeave += Leave_Button;
+                TableGrid.Children.Add(nb);
+                Grid.SetColumn(nb, j);
+            }
+
+            for (int j = 0; j < client.GetCardsOnTable(RoomName, password, userID).Count() + 1; j++)
+            {
+                nb = new Button();
+                nb.PreviewMouseLeftButtonDown += Button_MouseDown;
+                nb.MouseEnter += Enter_Button;
+                nb.MouseLeave += Leave_Button;
+                TableGrid2.Children.Add(nb);
+                Grid.SetColumn(nb, j);
+            }
+
+
             int i = 0;
             OponentCardsCount.Content = client.GetOpponentCardsCount(RoomName, password, userID);
             StockButton.Content = client.GetCardsInStockCount(RoomName, password, userID);
             TestButton.Content = client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString();
             foreach (var button in TableGrid.Children.OfType<Button>())//Чистка карт на столе
             {
-                button.Name = "";
-                Image image = new Image(); //чтобы присваивать изображения кнопкам
-                image.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/white.jpg"));
-                button.Content = image;
+                button.Name = "";              
+                button.Content = "";
             }
             foreach (var button in TableGrid2.Children.OfType<Button>())//Чистка карт на столе
             {
-                button.Name = "";
-                Image image = new Image(); //чтобы присваивать изображения кнопкам
-                image.Source = new BitmapImage(new Uri(@"pack://application:,,,/images/white.jpg"));
-                button.Content = image;
+                button.Name = "";               
+                button.Content = "";
             }
 
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanDefend") {
                 BitoButton.IsEnabled = false;
                 TableGrid2.IsEnabled = false;
                 TableGrid.IsEnabled = true;
-                TakeButton.IsEnabled = true;
+                bool b = true;
+                foreach (var list in client.GetCardsOnTable(RoomName, password, userID))
+                    if (list.Count() == 2)
+                    {
+                        b = false;
+                        break;
+                    }
+                if (b == false || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing")
+                    TakeButton.IsEnabled = false;
+                else
+                    TakeButton.IsEnabled = true;
                 foreach (var button in TableGrid.Children.OfType<Button>()) {
                     if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1) {
                         i = 0;
@@ -185,7 +242,17 @@ namespace DurakApp.Windows
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter") {
                 TakeButton.IsEnabled = false;
                 TableGrid.IsEnabled = false;
-                BitoButton.IsEnabled = true;
+                bool b = true;
+                foreach (var list in client.GetCardsOnTable(RoomName, password, userID))
+                    if (list.Count() < 2)
+                    {
+                        b = false;
+                        break;
+                    }
+                if ((b == false || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack") && !(client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter"))
+                    BitoButton.IsEnabled = false;
+                else
+                    BitoButton.IsEnabled = true;             
                 TableGrid2.IsEnabled = true;
                 foreach (var button in TableGrid2.Children.OfType<Button>()) {
                     if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1) {
@@ -212,11 +279,32 @@ namespace DurakApp.Windows
                     i++;
                 }
             }
+
+            HandGrid.ColumnDefinitions.Clear();
+            HandGrid.Children.Clear();
+            for (int j = 0; j < client.GetMyCards(RoomName, password, userID).Count(); j++)
+            {
+                cd = new ColumnDefinition();
+                HandGrid.ColumnDefinitions.Add(cd);
+            }
+
+            for (int j = 0; j < client.GetMyCards(RoomName, password, userID).Count(); j++)
+            {
+                nb = new Button();
+                nb.PreviewMouseLeftButtonDown += Button_MouseDown;
+                nb.MouseEnter += Enter_Button;
+                nb.MouseLeave += Leave_Button;
+                HandGrid.Children.Add(nb);
+                Grid.SetColumn(nb, j);
+            }
+
             foreach (var button in HandGrid.Children.OfType<Button>())//Чистка карт в руке
             {
                 button.Name = "";
                 button.Content = "";
             }
+            i = 0;
+             
             foreach (var button in HandGrid.Children.OfType<Button>())//Обновление карт в руке
             {
                 if (i > client.GetMyCards(RoomName, password, userID).Count() - 1) {
@@ -241,6 +329,24 @@ namespace DurakApp.Windows
         private void TakeButton_Click(object sender, RoutedEventArgs e)
         {
             client.MakeMove(RoomName, password, userID, null, null);
+        }
+
+        private void Enter_Button(object sender, RoutedEventArgs e)
+        {
+            Button enterButton = sender as Button;
+            enterButton.Background = Brushes.Aquamarine;        
+        }
+
+        private void Leave_Button(object sender, RoutedEventArgs e)
+        {
+            Button enterButton = sender as Button;
+            enterButton.Background = Brushes.ForestGreen;
+        }
+
+        private void Leave2_Button(object sender, RoutedEventArgs e)
+        {
+            Button enterButton = sender as Button;
+            enterButton.Background = Brushes.LightGray;
         }
     }
 }
