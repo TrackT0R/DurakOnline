@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DurakApp"
         mc:Ignorable="d"
-        Title="GameWindow" Height="720" Width="1280
-        " Background="ForestGreen">
+        Title="GameWindow" Height="720" Width="1280" Background="ForestGreen">
     <Window.Resources>
         <Style TargetType="Button" >
             <Setter Property="OverridesDefaultStyle" Value="True" />

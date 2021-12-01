@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DurakApp"
         mc:Ignorable="d"
-        Title="Дурак онлайн" Height="400" Width="385" ResizeMode="CanMinimize" Icon="C:\Users\79806\Source\Repos\DurakOnline\DurakApp\images\icon.png">
+        Title="Дурак онлайн" Height="400" Width="385" ResizeMode="CanMinimize" Icon="..\images\icon.png">
     <Grid>
         <ListBox Name ="Listbox"  HorizontalAlignment="Left" Height="300" Width="350" Margin="10,10,0,0" VerticalAlignment="Top" FontFamily="Consolas" SelectionChanged="Listbox_SelectionChanged"/>
         <Button Name="RefreshButton" Content="Обновить список" HorizontalAlignment="Left" Margin="10,328,0,0"  VerticalAlignment="Top" Width="112" Click="RefreshButton_Click"/>
