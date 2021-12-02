@@ -161,6 +161,10 @@ namespace DurakWcf
             return null;
         }
 
+        private bool ThereIsSuchValueCard(int index, Card NewCard)
+        {
+            return !(GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value) || x.Count > 1 && x[1].Value.Equals(NewCard.Value)) == -1);
+        }
 
         public bool MakeMove(string RoomName, string password, int PlayerID, Card NewCard, Card TargetCard)
         {
@@ -218,8 +222,7 @@ namespace DurakWcf
                     GameRooms[index].OffTable();
                 #endregion
 
-                if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value) || x[1].Value.Equals(NewCard.Value)) == -1
-                    || GameRooms[index].UncoverdCardsCount() >= OpponentCards.Count)
+                if (!ThereIsSuchValueCard(index, NewCard) || GameRooms[index].UncoverdCardsCount() >= OpponentCards.Count)
                     return false;
 
                 if (PlayerIsFirst)
@@ -236,7 +239,7 @@ namespace DurakWcf
                 if (NewCard == null)
                     GameRooms[index].Take();
 
-                if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value) || x[1].Value.Equals(NewCard.Value)) == -1)
+                if (!ThereIsSuchValueCard(index, NewCard))
                     return false;
 
                 if (PlayerIsFirst)
