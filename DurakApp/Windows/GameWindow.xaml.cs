@@ -81,7 +81,20 @@ namespace DurakApp.Windows
                     BitoButton.IsEnabled = false;
                     TakeButton.IsEnabled = false;
                     HandGrid.IsEnabled = false;
-                    return;
+                    if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanDefend")
+                    {
+                        TableGrid.IsEnabled = true;
+                        foreach(var button in TableGrid.Children.OfType<Button>())
+                        {
+                            if (button.Name == "")
+                                button.IsEnabled = false;
+                        }
+                    }
+                    if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter")
+                    {
+                        TableGrid2.IsEnabled = true;
+                    }
+                        return;
                 }
                 if (secondClicked == null) {
                     secondClicked = clickButton;
@@ -120,7 +133,7 @@ namespace DurakApp.Windows
                             j2 = 0;
                         }
                     }
-                    var s = client.GetMyCards(RoomName, password, userID);
+                    
                     if (s2.Length < 2)
                         client.MakeMove(RoomName, password, userID, client.GetMyCards(RoomName, password, userID)[i1], null);
                     else
@@ -187,7 +200,7 @@ namespace DurakApp.Windows
             int i = 0;
             OponentCardsCount.Content = client.GetOpponentCardsCount(RoomName, password, userID);
             StockButton.Content = client.GetCardsInStockCount(RoomName, password, userID);
-            TestButton.Content = client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString();
+            TestButton.Content = client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString();           
             foreach (var button in TableGrid.Children.OfType<Button>())//Чистка карт на столе
             {
                 button.Name = "";              
@@ -200,20 +213,22 @@ namespace DurakApp.Windows
             }
 
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanDefend") {
-                BitoButton.IsEnabled = false;
+
+                BitoButton.Visibility = Visibility.Hidden;
                 TableGrid2.IsEnabled = false;
-                TableGrid.IsEnabled = true;
+                TableGrid.IsEnabled = false;
                 bool b = true;
                 foreach (var list in client.GetCardsOnTable(RoomName, password, userID))
-                    if (list.Count() == 2)
+                    if (list.Count() != 2)
                     {
                         b = false;
                         break;
                     }
-                if (b == false || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing")
+                if (b || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing")
                     TakeButton.IsEnabled = false;
                 else
                     TakeButton.IsEnabled = true;
+
                 foreach (var button in TableGrid.Children.OfType<Button>()) {
                     if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1) {
                         i = 0;
@@ -227,9 +242,14 @@ namespace DurakApp.Windows
                     i++;
                 }
                 foreach (var button in TableGrid2.Children.OfType<Button>()) {
-                    if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1 || client.GetCardsOnTable(RoomName, password, userID)[i].Count() < 2) {
+                    if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1){
                         i = 0;
                         break;
+                    }
+                    if (client.GetCardsOnTable(RoomName, password, userID)[i].Count() < 2)
+                    {
+                        i++;
+                        continue;
                     }
                     button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + "_" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
                     string str = @"pack://application:,,,/Cards/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + @"/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value + ".jpg";
@@ -240,8 +260,9 @@ namespace DurakApp.Windows
                 }
             }
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter") {
-                TakeButton.IsEnabled = false;
+                TakeButton.Visibility = Visibility.Hidden;
                 TableGrid.IsEnabled = false;
+                TableGrid2.IsEnabled = false;
                 bool b = true;
                 foreach (var list in client.GetCardsOnTable(RoomName, password, userID))
                     if (list.Count() < 2)
@@ -249,11 +270,10 @@ namespace DurakApp.Windows
                         b = false;
                         break;
                     }
-                if ((b == false || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack") && !(client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter"))
+                if ((!b || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack") && !(client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter"))
                     BitoButton.IsEnabled = false;
                 else
                     BitoButton.IsEnabled = true;             
-                TableGrid2.IsEnabled = true;
                 foreach (var button in TableGrid2.Children.OfType<Button>()) {
                     if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1) {
                         i = 0;
@@ -267,9 +287,14 @@ namespace DurakApp.Windows
                     i++;
                 }
                 foreach (var button in TableGrid.Children.OfType<Button>()) {
-                    if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1 || client.GetCardsOnTable(RoomName, password, userID)[i].Count() < 2) {
+                    if (i > client.GetCardsOnTable(RoomName, password, userID).Count() - 1 ) {
                         i = 0;
                         break;
+                    }
+                    if (client.GetCardsOnTable(RoomName, password, userID)[i].Count() < 2)
+                    {
+                        i++;
+                        continue;
                     }
                     button.Name = client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + "_" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value;
                     string str = @"pack://application:,,,/Cards/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Suit + @"/" + client.GetCardsOnTable(RoomName, password, userID)[i][1].Value + ".jpg";
@@ -282,10 +307,18 @@ namespace DurakApp.Windows
 
             HandGrid.ColumnDefinitions.Clear();
             HandGrid.Children.Clear();
+            OpponentHandGrid.ColumnDefinitions.Clear();
+            OpponentHandGrid.Children.Clear();
             for (int j = 0; j < client.GetMyCards(RoomName, password, userID).Count(); j++)
             {
                 cd = new ColumnDefinition();
                 HandGrid.ColumnDefinitions.Add(cd);
+            }
+
+            for (int j = 0; j < client.GetOpponentCardsCount(RoomName, password, userID); j++)
+            {
+                cd = new ColumnDefinition();
+                OpponentHandGrid.ColumnDefinitions.Add(cd);
             }
 
             for (int j = 0; j < client.GetMyCards(RoomName, password, userID).Count(); j++)
@@ -295,6 +328,17 @@ namespace DurakApp.Windows
                 nb.MouseEnter += Enter_Button;
                 nb.MouseLeave += Leave_Button;
                 HandGrid.Children.Add(nb);
+                Grid.SetColumn(nb, j);
+            }
+
+            for (int j = 0; j < client.GetOpponentCardsCount(RoomName, password, userID); j++)
+            {
+                nb = new Button();
+                Image image = new Image();
+                string str = @"pack://application:,,,/images/Rubashka.jpg";
+                image.Source = new BitmapImage(new Uri(str));
+                nb.Content = image;
+                OpponentHandGrid.Children.Add(nb);
                 Grid.SetColumn(nb, j);
             }
 

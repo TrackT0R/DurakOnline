@@ -47,14 +47,15 @@
         <Grid x:Name="HandGrid" HorizontalAlignment="Left" Height="118" Margin="34,501,0,0" VerticalAlignment="Top" Width="1028" Grid.ColumnSpan="3">
 
         </Grid>
-        <Button x:Name="OponentCardsCount" Background="ForestGreen" Content="" IsEnabled="False" HorizontalAlignment="Left" Height="53" Margin="211.2,10,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.946,0.527" Grid.Column="1" Foreground="Black" FontSize="24"/>
+        <Button x:Name="OponentCardsCount" Background="ForestGreen" Content="" IsEnabled="False" HorizontalAlignment="Left" Height="53" Margin="221.8,10,0,0" VerticalAlignment="Top" Width="95" RenderTransformOrigin="0.946,0.527" Grid.Column="1" Foreground="Black" FontSize="24"/>
         <Button x:Name="BitoButton" Background="LightGray" MouseEnter="Enter_Button" MouseLeave="Leave2_Button" Content="Bito" HorizontalAlignment="Left" Height="66" Margin="726.8,281,0,0" VerticalAlignment="Top" Width="162" Click="BitoButton_Click" Grid.Column="1" FontSize="24"/>
         <Button x:Name="TakeButton" Background="LightGray" MouseEnter="Enter_Button" MouseLeave="Leave2_Button" Content="Take" HorizontalAlignment="Left" Height="44" Margin="280.8,624,0,0" VerticalAlignment="Top" Width="197" Click="TakeButton_Click" Grid.Column="1" FontSize="24"/>
-        <Button x:Name="StockButton"  Content=""  HorizontalAlignment="Left" Height="35" Margin="0.4,194,0,0" VerticalAlignment="Top" Width="84" Background="ForestGreen" IsEnabled="True" Grid.Column="2" Foreground="Black" Grid.ColumnSpan="2"/>
+        <Button x:Name="StockButton"  Content=""  HorizontalAlignment="Left" Height="35" Margin="0.4,194,0,0" VerticalAlignment="Top" Width="84" Background="ForestGreen" IsEnabled="False" Grid.Column="2" Foreground="Black" Grid.ColumnSpan="2" FontSize="24"/>
         <Grid x:Name="TableGrid2" HorizontalAlignment="Left" Height="125" Margin="34,270,0,0" VerticalAlignment="Top" Width="791" Grid.ColumnSpan="2" />
         <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Height="28" Margin="644.431,501,0,0" VerticalAlignment="Top" Width="120" Click="RefreshButton_Click" Grid.Column="1" Visibility="Hidden"/>
-        <Button x:Name="TestButton" IsEnabled="False" Content="" HorizontalAlignment="Left" Height="51" Margin="280.8,445,0,0" VerticalAlignment="Top" Width="197" Grid.Column="1" Background="#FFF4FF00"/>
+        <Button x:Name="TestButton" IsEnabled="False" Content="" HorizontalAlignment="Left" Height="51" Margin="280.8,445,0,0" VerticalAlignment="Top" Width="197" Grid.Column="1" Background="#FFF4FF00" FontSize="24"/>
         <Image x:Name="TrumpButton" Grid.Column="3" HorizontalAlignment="Left" Height="161" Margin="44.4,234,0,0" VerticalAlignment="Top" Width="78"/>
         <Image x:Name="Rubashka" Grid.Column="2" HorizontalAlignment="Left" Height="161" Margin="3.4,234,0,0" VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2" />
+        <Grid x:Name="OpponentHandGrid" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="100" Margin="34,10,0,0" VerticalAlignment="Top" Width="791"/>
     </Grid>
 </Window>
