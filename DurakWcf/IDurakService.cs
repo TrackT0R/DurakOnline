@@ -144,38 +144,39 @@ namespace DurakWcf
             return cnt;
         }
 
+        private void GiveCardsToFirst()
+        {
+            while (FirstPlayerCards.Count < 6) {
+                if (CardsInStock.Count == 0)
+                    return;
+                FirstPlayerCards.Add(CardsInStock[0]);
+                CardsInStock.RemoveAt(0);
+            }
+        }
+
+        private void GiveCardsToSecond()
+        {
+            while (SecondPlayerCards.Count < 6) {
+                if (CardsInStock.Count == 0)
+                    return;
+                SecondPlayerCards.Add(CardsInStock[0]);
+                CardsInStock.RemoveAt(0);
+            }
+        }
+
         public void OffTable()
         {
             CardsOnTable = new List<List<Card>>();
+            
             if (GameStatus == 11) {
                 GameStatus = 1;
-                while (FirstPlayerCards.Count < 6) {
-                    if (CardsInStock.Count == 0)
-                        return;
-                    FirstPlayerCards.Add(CardsInStock[0]);
-                    CardsInStock.RemoveAt(0);
-                }
-                while (SecondPlayerCards.Count < 6) {
-                    if (CardsInStock.Count == 0)
-                        return;
-                    SecondPlayerCards.Add(CardsInStock[0]);
-                    CardsInStock.RemoveAt(0);
-                }
+                GiveCardsToFirst();
+                GiveCardsToSecond();
             }
             else {
                 GameStatus = 2;
-                while (SecondPlayerCards.Count < 6) {
-                    if (CardsInStock.Count == 0)
-                        return;
-                    SecondPlayerCards.Add(CardsInStock[0]);
-                    CardsInStock.RemoveAt(0);
-                }
-                while (FirstPlayerCards.Count < 6) {
-                    if (CardsInStock.Count == 0)
-                        return;
-                    FirstPlayerCards.Add(CardsInStock[0]);
-                    CardsInStock.RemoveAt(0);
-                }
+                GiveCardsToSecond();
+                GiveCardsToFirst();
             }
 
             FirstPlayerCards.Sort();
@@ -184,35 +185,19 @@ namespace DurakWcf
 
         public void Take()
         {
-            if (GameStatus == 12) {
-                foreach (var c in CardsOnTable)
+            foreach (var c in CardsOnTable)
+                if (GameStatus == 12)
                     FirstPlayerCards.AddRange(c);
 
-                CardsOnTable = new List<List<Card>>();
-
+            CardsOnTable = new List<List<Card>>();
+            
+            if (GameStatus == 12) {
                 GameStatus = 2;
-
-                while (SecondPlayerCards.Count < 6) {
-                    if (CardsInStock.Count == 0)
-                        return;
-                    SecondPlayerCards.Add(CardsInStock[0]);
-                    CardsInStock.RemoveAt(0);
-                }
+                GiveCardsToSecond();
             }
             else {
-                foreach (var c in CardsOnTable)
-                    SecondPlayerCards.AddRange(c);
-
-                CardsOnTable = new List<List<Card>>();
-
                 GameStatus = 1;
-
-                while (FirstPlayerCards.Count < 6) {
-                    if (CardsInStock.Count == 0)
-                        return;
-                    FirstPlayerCards.Add(CardsInStock[0]);
-                    CardsInStock.RemoveAt(0);
-                }
+                GiveCardsToFirst();
             }
         }
         #endregion
@@ -230,6 +215,7 @@ namespace DurakWcf
         [DataMember]
         public ValueEnum Value { get; private set; }
 
+        #region Methods
         public Card(SuitEnum suit, ValueEnum value)
         {
             Suit = suit;
@@ -256,6 +242,7 @@ namespace DurakWcf
             hashCode = hashCode * -1521134295 + Value.GetHashCode();
             return hashCode;
         }
+        #endregion
     }
 
     [DataContract]
