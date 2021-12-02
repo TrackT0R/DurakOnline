@@ -215,6 +215,7 @@ namespace DurakApp.Windows
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanDefend") {
 
                 BitoButton.Visibility = Visibility.Hidden;
+                TakeButton.Visibility = Visibility.Visible;
                 TableGrid2.IsEnabled = false;
                 TableGrid.IsEnabled = false;
                 bool b = true;
@@ -261,6 +262,7 @@ namespace DurakApp.Windows
             }
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter") {
                 TakeButton.Visibility = Visibility.Hidden;
+                BitoButton.Visibility = Visibility.Visible;
                 TableGrid.IsEnabled = false;
                 TableGrid2.IsEnabled = false;
                 bool b = true;
