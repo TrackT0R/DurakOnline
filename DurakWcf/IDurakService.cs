@@ -148,6 +148,7 @@ namespace DurakWcf
         {
             CardsOnTable = new List<List<Card>>();
             if (GameStatus == 11) {
+                GameStatus = 1;
                 while (FirstPlayerCards.Count < 6) {
                     if (CardsInStock.Count == 0)
                         return;
@@ -160,9 +161,9 @@ namespace DurakWcf
                     SecondPlayerCards.Add(CardsInStock[0]);
                     CardsInStock.RemoveAt(0);
                 }
-                GameStatus = 1;
             }
             else {
+                GameStatus = 2;
                 while (SecondPlayerCards.Count < 6) {
                     if (CardsInStock.Count == 0)
                         return;
@@ -175,7 +176,6 @@ namespace DurakWcf
                     FirstPlayerCards.Add(CardsInStock[0]);
                     CardsInStock.RemoveAt(0);
                 }
-                GameStatus = 2;
             }
 
             FirstPlayerCards.Sort();
@@ -190,14 +190,14 @@ namespace DurakWcf
 
                 CardsOnTable = new List<List<Card>>();
 
+                GameStatus = 2;
+
                 while (SecondPlayerCards.Count < 6) {
                     if (CardsInStock.Count == 0)
                         return;
                     SecondPlayerCards.Add(CardsInStock[0]);
                     CardsInStock.RemoveAt(0);
                 }
-
-                GameStatus = 2;
             }
             else {
                 foreach (var c in CardsOnTable)
@@ -205,14 +205,14 @@ namespace DurakWcf
 
                 CardsOnTable = new List<List<Card>>();
 
+                GameStatus = 1;
+
                 while (FirstPlayerCards.Count < 6) {
                     if (CardsInStock.Count == 0)
                         return;
                     FirstPlayerCards.Add(CardsInStock[0]);
                     CardsInStock.RemoveAt(0);
                 }
-
-                GameStatus = 1;
             }
         }
         #endregion
