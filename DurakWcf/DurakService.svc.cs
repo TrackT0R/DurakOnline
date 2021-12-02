@@ -12,8 +12,10 @@ namespace DurakWcf
     // ПРИМЕЧАНИЕ. Чтобы запустить клиент проверки WCF для тестирования службы, выберите элементы Service1.svc или Service1.svc.cs в обозревателе решений и начните отладку.
     public class DurakService : IDurakService
     {
+        #region Room lists
         private static List<Room> FreeRooms = new List<Room>();
         private static List<Room> GameRooms = new List<Room>();
+        #endregion
 
         #region Connect methods
         public bool HasPassword(string RoomName)
@@ -77,71 +79,61 @@ namespace DurakWcf
 
         #region Game methods
 
+        private int GetGameRoomAndAuth(string RoomName, string password, int PlayerID)
+        {
+            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
+            if (index == -1 || GameRooms[index].password != password ||
+                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
+                return -1;
+            return index;
+        }
+
+        public Card Card(Card.SuitEnum suit, Card.ValueEnum value)
+        {
+            return new Card(suit, value);
+        }
+
         #region Cards info requests
         public List<Card> GetMyCards(string RoomName, string password, int PlayerID)
         {
             int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
+            if (index == -1 || GameRooms[index].password != password || (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
                 return null;
 
-            if (GameRooms[index].FirstPlayerID == PlayerID)
-                return GameRooms[index].FirstPlayerCards;
-            else
-                return GameRooms[index].SecondPlayerCards;
+            return GameRooms[index].FirstPlayerID == PlayerID ? GameRooms[index].FirstPlayerCards : GameRooms[index].SecondPlayerCards;
         }
 
         public List<List<Card>> GetCardsOnTable(string RoomName, string password, int PlayerID)
         {
-            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
-                return null;
-
-            return GameRooms[index].CardsOnTable;
+            int index = GetGameRoomAndAuth(RoomName, password, PlayerID);
+            return index == -1 ? null : GameRooms[index].CardsOnTable;
         }
 
         public int GetCardsInStockCount(string RoomName, string password, int PlayerID)
         {
-            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
-                return -1;
-
-            return GameRooms[index].CardsInStock.Count;
+            int index = GetGameRoomAndAuth(RoomName, password, PlayerID);
+            return index == -1 ? -1 : GameRooms[index].CardsInStock.Count;
         }
 
         public int GetOpponentCardsCount(string RoomName, string password, int PlayerID)
         {
-            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
-                return -1;
-
-            if (GameRooms[index].FirstPlayerID == PlayerID)
-                return GameRooms[index].SecondPlayerCards.Count;
-            else
-                return GameRooms[index].FirstPlayerCards.Count;
+            int index = GetGameRoomAndAuth(RoomName, password, PlayerID);
+            return index == -1 ? -1 : GameRooms[index].FirstPlayerID == PlayerID ?
+                GameRooms[index].SecondPlayerCards.Count : GameRooms[index].FirstPlayerCards.Count;
         }
 
         public Card GetTrumpCard(string RoomName, string password, int PlayerID)
         {
-            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
-                return null;
-
-            return GameRooms[index].TrumpCard;
+            int index = GetGameRoomAndAuth(RoomName, password, PlayerID);
+            return index == -1 ? null : GameRooms[index].TrumpCard;
         }
         #endregion
 
         #region Move processing
         public MoveOpportunity GetMoveOpportunity(string RoomName, string password, int PlayerID)
         {
-            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password ||
-                (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
-                return null;
+            int index = GetGameRoomAndAuth(RoomName, password, PlayerID);
+            if (index == -1) return null;
 
             if (GameRooms[index].FirstPlayerID == PlayerID)
                 switch (GameRooms[index].GameStatus) {
@@ -167,142 +159,95 @@ namespace DurakWcf
 
                 }
             return null;
-
         }
+
 
         public bool MakeMove(string RoomName, string password, int PlayerID, Card NewCard, Card TargetCard)
         {
-            int index = GameRooms.FindIndex(x => x.RoomName == RoomName);
-            if (index == -1 || GameRooms[index].password != password || (PlayerID != GameRooms[index].FirstPlayerID && PlayerID != GameRooms[index].SecondPlayerID))
-                return false;
+            int index = GetGameRoomAndAuth(RoomName, password, PlayerID);
+            if (index == -1) return false;
 
-            if (GameRooms[index].FirstPlayerID == PlayerID) {
-                #region Проверка наличия карты
-                var CardIndex = (NewCard == null) ? -2 : GameRooms[index].FirstPlayerCards.FindIndex(x => x.Equals(NewCard));
-                if (CardIndex == -1)
-                    return false;
-                #endregion
+            var PlayerIsFirst = GameRooms[index].FirstPlayerID == PlayerID;
+            var PlayerCards = (PlayerIsFirst) ? GameRooms[index].FirstPlayerCards : GameRooms[index].SecondPlayerCards;
+            var OpponentCards = (PlayerIsFirst) ? GameRooms[index].SecondPlayerCards : GameRooms[index].FirstPlayerCards;
 
-                switch (GameRooms[index].GameStatus) {
-                    #region Атака
-                    case 1:
+            #region Проверка наличия карты
+            var CardIndex = (NewCard == null) ? -2 : PlayerCards.FindIndex(x => x.Equals(NewCard));
+            if (CardIndex == -1) return false;
+            #endregion
+
+            #region Атака
+            if (GameRooms[index].GameStatus == 1 && PlayerIsFirst || GameRooms[index].GameStatus == 2 && !PlayerIsFirst) {
+                if (PlayerIsFirst)
+                    GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                else
+                    GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
+
+                GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
+                GameRooms[index].GameStatus = PlayerIsFirst ? 21 : 11;
+            }
+            #endregion
+
+            #region Защита
+            else if (GameRooms[index].GameStatus == 11 && PlayerIsFirst || GameRooms[index].GameStatus == 21 && !PlayerIsFirst) {
+                if (NewCard == null && GameRooms[index].UncoverdCardsCount() > 0) {
+                    GameRooms[index].GameStatus = PlayerIsFirst ? 12 : 22;
+                    return true;
+                }
+
+                if (TargetCard == null) return false;
+
+                var TargerCardIndex = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Equals(TargetCard));
+                if (TargerCardIndex == -1) return false;
+
+                if ((NewCard.Suit == TargetCard.Suit && NewCard.Value > TargetCard.Value) || (NewCard.Suit == GameRooms[index].TrumpCard.Suit && NewCard.Suit != TargetCard.Suit)) {
+                    GameRooms[index].CardsOnTable[TargerCardIndex].Add(NewCard);
+
+                    if (PlayerIsFirst)
                         GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                        GameRooms[index].GameStatus = 21;
-                        break;
-                    #endregion
-                    #region Защита
-                    case 11:
-                        if (NewCard == null) {
-                            GameRooms[index].GameStatus = 12;
-                            return true;
-                        }
-
-                        if (TargetCard == null)
-                            return false;
-
-                        var TargerCardIndex = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Equals(TargetCard));
-                        if (TargerCardIndex == -1)
-                            return false;
-
-                        if ((NewCard.Suit == TargetCard.Suit && NewCard.Value > TargetCard.Value) || (NewCard.Suit == GameRooms[index].TrumpCard.Suit && NewCard.Suit != TargetCard.Suit)) {
-                            GameRooms[index].CardsOnTable[TargerCardIndex].Add(NewCard);
-                            GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
-                        }
-                        break;
-                    #endregion
-                    #region Подкидывание
-                    case 21:
-                        #region Бито
-                        if (NewCard == null && GameRooms[index].UncoverdCardsCount() == 0) {
-                            GameRooms[index].OffTable();
-                        }
-                        #endregion
-
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1  || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].SecondPlayerCards.Count)
-                            return false;
-
-                        GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                        break;
-                    #endregion
-                    #region Подкидывание вдогонку
-                    case 22:
-                        if (NewCard == null)
-                            GameRooms[index].Take();
-
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1)
-                            return false;
-
-                        GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                        break;
-                        #endregion
+                    else
+                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
                 }
             }
-            else {
-                #region Проверка наличия карты
-                var CardIndex = (NewCard == null) ? -2 : GameRooms[index].SecondPlayerCards.FindIndex(x => x.Equals(NewCard));
-                if (CardIndex == -1)
-                    return false;
+            #endregion
+
+            #region Подкидывание
+            else if (GameRooms[index].GameStatus == 21 && PlayerIsFirst || GameRooms[index].GameStatus == 11 && !PlayerIsFirst) {
+                #region Бито
+                if (NewCard == null && GameRooms[index].UncoverdCardsCount() == 0)
+                    GameRooms[index].OffTable();
                 #endregion
-                switch (GameRooms[index].GameStatus) {
-                    #region Атака
-                    case 2:
-                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                        GameRooms[index].GameStatus = 11;
-                        break;
-                    #endregion
-                    #region Защита
-                    case 21:
-                        if (NewCard == null) {
-                            GameRooms[index].GameStatus = 22;
-                            return true;
-                        }
 
-                        if (TargetCard == null)
-                            return false;
+                if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value) || x[1].Value.Equals(NewCard.Value)) == -1
+                    || GameRooms[index].UncoverdCardsCount() >= OpponentCards.Count)
+                    return false;
 
-                        var TargerCardIndex = GameRooms[index].CardsOnTable.FindIndex(x => x[0].Equals(TargetCard));
-                        if (TargerCardIndex == -1)
-                            return false;
+                if (PlayerIsFirst)
+                    GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                else
+                    GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
 
-                        if ((NewCard.Suit == TargetCard.Suit && NewCard.Value > TargetCard.Value) || (NewCard.Suit == GameRooms[index].TrumpCard.Suit && NewCard.Suit != TargetCard.Suit)) {
-                            GameRooms[index].CardsOnTable[TargerCardIndex].Add(NewCard);
-                            GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
-                        }
-                        break;
-                    #endregion
-                    #region Подкидывание
-                    case 11:
-                        #region Бито
-                        if (NewCard == null && GameRooms[index].UncoverdCardsCount() == 0) {
-                            GameRooms[index].OffTable();
-                        }
-                        #endregion
-
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1 || GameRooms[index].UncoverdCardsCount() >= GameRooms[index].FirstPlayerCards.Count)
-                            return false;
-
-                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                        break;
-                    #endregion
-                    #region Подкидывание вдогонку
-                    case 12:
-                        if (NewCard == null)
-                            GameRooms[index].Take();
-
-                        if (GameRooms[index].CardsOnTable.FindIndex(x => x[1].Value.Equals(NewCard.Value) || x[0].Value.Equals(NewCard.Value)) == -1)
-                            return false;
-
-                        GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
-                        GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
-                        break;
-                        #endregion
-                }
+                GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
             }
+            #endregion
+
+            #region Подкидывание вдогонку
+            else if (GameRooms[index].GameStatus == 22 && PlayerIsFirst || GameRooms[index].GameStatus == 12 && !PlayerIsFirst) {
+                if (NewCard == null)
+                    GameRooms[index].Take();
+
+                if (GameRooms[index].CardsOnTable.FindIndex(x => x[0].Value.Equals(NewCard.Value) || x[1].Value.Equals(NewCard.Value)) == -1)
+                    return false;
+
+                if (PlayerIsFirst)
+                    GameRooms[index].FirstPlayerCards.RemoveAt(CardIndex);
+                else
+                    GameRooms[index].SecondPlayerCards.RemoveAt(CardIndex);
+
+                GameRooms[index].CardsOnTable.Add(new List<Card> { NewCard });
+            }
+            #endregion
+
 
             if (GameRooms[index].FirstPlayerCards.Count == 0)
                 GameRooms[index].GameStatus = 10;
@@ -314,10 +259,5 @@ namespace DurakWcf
         #endregion
 
         #endregion
-
-        public Card Card(Card.SuitEnum suit, Card.ValueEnum value)
-        {
-            return new Card(suit, value);
-        }
     }
 }
