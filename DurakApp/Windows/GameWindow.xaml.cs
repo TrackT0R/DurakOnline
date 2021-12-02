@@ -93,8 +93,13 @@ namespace DurakApp.Windows
                     if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter")
                     {
                         TableGrid2.IsEnabled = true;
+                        foreach (var button in TableGrid2.Children.OfType<Button>())
+                        {
+                            if (button.Name != "")
+                                button.IsEnabled = false;
+                        }
                     }
-                        return;
+                    return;
                 }
                 if (secondClicked == null) {
                     secondClicked = clickButton;
@@ -143,6 +148,13 @@ namespace DurakApp.Windows
                     second = "";
                     secondClicked = null;
                     HandGrid.IsEnabled = true;
+                    if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouWin" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouLose")
+                    {
+                        client.Close();
+                        timer.Stop();
+                        return;
+                    }
+                    RefreshButton_Click(sender, new RoutedEventArgs());
                     timer.Start();
                     return;
 
@@ -156,7 +168,11 @@ namespace DurakApp.Windows
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouWin" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouLose")
+            {
+                MessageBox.Show(client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString());
+                client.Close();
+            }
 
             TableGrid.ColumnDefinitions.Clear();
             TableGrid2.ColumnDefinitions.Clear();
@@ -370,11 +386,13 @@ namespace DurakApp.Windows
         private void BitoButton_Click(object sender, RoutedEventArgs e)
         {
             client.MakeMove(RoomName, password, userID, null, null);
+            RefreshButton_Click(sender, new RoutedEventArgs());
         }
 
         private void TakeButton_Click(object sender, RoutedEventArgs e)
         {
             client.MakeMove(RoomName, password, userID, null, null);
+            RefreshButton_Click(sender, new RoutedEventArgs());
         }
 
         private void Enter_Button(object sender, RoutedEventArgs e)
