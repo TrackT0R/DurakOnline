@@ -188,6 +188,8 @@ namespace DurakWcf
             foreach (var c in CardsOnTable)
                 if (GameStatus == 12)
                     FirstPlayerCards.AddRange(c);
+                else
+                    SecondPlayerCards.AddRange(c);
 
             CardsOnTable = new List<List<Card>>();
             
