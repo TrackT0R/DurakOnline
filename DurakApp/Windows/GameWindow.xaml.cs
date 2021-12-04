@@ -83,11 +83,23 @@ namespace DurakApp.Windows
                     HandGrid.IsEnabled = false;
                     if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanDefend")
                     {
+                        int l = 0;
                         TableGrid.IsEnabled = true;
                         foreach(var button in TableGrid.Children.OfType<Button>())
                         {
                             if (button.Name == "")
                                 button.IsEnabled = false;
+                            int j = 0;
+                            foreach (var button1 in TableGrid2.Children.OfType<Button>())
+                            {
+                                if (j == l && button1.Name != "")
+                                {
+                                    button.IsEnabled = false;
+                                    break;
+                                }
+                                j++;
+                            }
+                            l++;
                         }
                     }
                     if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter")
@@ -272,6 +284,13 @@ namespace DurakApp.Windows
                     i++;
                 }
             }
+
+            if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanNothing")
+                HandGrid.IsEnabled = false;
+            else          
+                HandGrid.IsEnabled = true;
+            
+
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanAttack" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrow" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "CanThrowAfter") {
                 TakeButton.Visibility = Visibility.Hidden;
                 BitoButton.Visibility = Visibility.Visible;
