@@ -148,12 +148,7 @@ namespace DurakApp.Windows
                     second = "";
                     secondClicked = null;
                     HandGrid.IsEnabled = true;
-                    if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouWin" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouLose")
-                    {
-                        client.Close();
-                        timer.Stop();
-                        return;
-                    }
+                    
                     RefreshButton_Click(sender, new RoutedEventArgs());
                     timer.Start();
                     return;
@@ -171,7 +166,8 @@ namespace DurakApp.Windows
             if (client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouWin" || client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString() == "YouLose")
             {
                 MessageBox.Show(client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString());
-                client.Close();
+                timer.Stop();
+                DialogResult = true;
             }
 
             TableGrid.ColumnDefinitions.Clear();

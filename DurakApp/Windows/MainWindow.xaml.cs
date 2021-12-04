@@ -129,7 +129,7 @@ namespace DurakApp
             this.Visibility = Visibility.Hidden;
             var gw = new GameWindow(client, RoomName, userId, password);
             gw.Left = this.Left + 50;
-            gw.Top = 0;
+            gw.Top = 30;
             gw.ShowDialog();
             client.DeleteRoom(RoomName, password, userId);
             this.Visibility = Visibility.Visible;
