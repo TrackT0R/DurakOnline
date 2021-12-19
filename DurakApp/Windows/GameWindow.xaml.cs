@@ -1,5 +1,6 @@
 ﻿using DurakApp.DurakServiceReference;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,15 +22,14 @@ namespace DurakApp.Windows
         private int userID { get; set; }
         private string password { get; set; }
 
+        private DispatcherTimer timer = new DispatcherTimer();
         string first = ""; // эта штука понадобится, объяснения будут ниже
         string second = ""; // тоже понадобится
         Button firstClicked = null; // Это ссылочная переменная!!!!!!!!! Она не добавляет новую кнопку в wpf, т.к не использует ключевое слово new и объект тем самым не создается
         Button secondClicked = null; // Тоже ссылочная переменная. Они будут ссылаться на наши кнопки, на которые мы кликаем
 
         #endregion
-
-
-
+        
         #region Initialization
         public GameWindow(DurakServiceClient client, string RoomName, int userID, string password)
         {
@@ -47,29 +47,8 @@ namespace DurakApp.Windows
         }
         #endregion
 
-        private DispatcherTimer timer = new DispatcherTimer();
-
-
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            RefreshButton_Click(sender, new RoutedEventArgs());
-        }
-
-        void TestConnect()
-        {
-            var s = client.GetMyCards(RoomName, password, userID);
-            client.GetCardsOnTable(RoomName, password, userID);
-            client.GetCardsInStockCount(RoomName, password, userID);
-            client.GetOpponentCardsCount(RoomName, password, userID);
-            client.GetTrumpCard(RoomName, password, userID);
-            client.GetMoveOpportunity(RoomName, password, userID);
-
-            client.MakeMove(RoomName, password, userID, s[5], null);
-            client.GetMyCards(RoomName, password, userID);
-            client.GetCardsOnTable(RoomName, password, userID);
-        }
-
+        
+        #region MouseDown
         private void Button_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Button clickButton = sender as Button; //эта строка преобразует переменную sender в метку с именем clickButton
@@ -172,17 +151,39 @@ namespace DurakApp.Windows
                 }
             }//проверяет произошло ли успешное преобразование из строки выше, если не null то всё ок, если null то это бы означало что мы нажали не на кнопку, а на чето другое
         }//обрабатывает событие клика
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
+        #endregion
 
+        #region Cards Refresh
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            RefreshButton_Click(sender, new RoutedEventArgs());
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            string GetMoveOpportunity = client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString();
-            Card[][] GetCardsOnTable = client.GetCardsOnTable(RoomName, password, userID);
-            Card[] GetMyCards = client.GetMyCards(RoomName, password, userID);
-            int GetOpponentCardsCount = client.GetOpponentCardsCount(RoomName, password, userID);
+            string GetMoveOpportunity = "err";
+            Card[][] GetCardsOnTable = null;
+            Card[] GetMyCards = null;
+            int GetOpponentCardsCount = -1;
+            int GetCardsInStockCount = -1;
+            try {
+                GetMoveOpportunity = client.GetMoveOpportunity(RoomName, password, userID).CanMakeMove.ToString();
+                GetCardsOnTable = client.GetCardsOnTable(RoomName, password, userID);
+                GetMyCards = client.GetMyCards(RoomName, password, userID);
+                GetOpponentCardsCount = client.GetOpponentCardsCount(RoomName, password, userID);
+                GetCardsInStockCount = client.GetCardsInStockCount(RoomName, password, userID);
+            }
+            catch {
+                MessageBox.Show("Other player is out of the game");
+                this.Close();
+                return;
+            }
+            if (GetMoveOpportunity == "err" || GetCardsOnTable == null || GetMyCards == null || GetOpponentCardsCount == -1 || GetCardsInStockCount == -1) {
+                MessageBox.Show("Other player is out of the game");
+                this.Close();
+                return;
+            }
+
             if (GetMoveOpportunity == "YouWin" || GetMoveOpportunity == "YouLose")
             {
                 MessageBox.Show(GetMoveOpportunity);
@@ -230,8 +231,8 @@ namespace DurakApp.Windows
 
 
             int i = 0;
-            OponentCardsCount.Content = client.GetOpponentCardsCount(RoomName, password, userID);
-            StockButton.Content = client.GetCardsInStockCount(RoomName, password, userID);
+            OponentCardsCount.Content = GetOpponentCardsCount;
+            StockButton.Content = GetCardsInStockCount;
             TestButton.Content = GetMoveOpportunity;           
             foreach (var button in TableGrid.Children.OfType<Button>())//Чистка карт на столе
             {
@@ -405,7 +406,9 @@ namespace DurakApp.Windows
             }
 
         }
+        #endregion
 
+        #region Buttons clicks
         private void BitoButton_Click(object sender, RoutedEventArgs e)
         {
             client.MakeMove(RoomName, password, userID, null, null);
@@ -434,6 +437,12 @@ namespace DurakApp.Windows
         {
             Button enterButton = sender as Button;
             enterButton.Background = Brushes.LightGray;
+        }
+        #endregion
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            timer.Stop();
         }
     }
 }

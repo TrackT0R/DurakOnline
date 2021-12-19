@@ -17,12 +17,19 @@ namespace DurakApp
         int userId = 0;
         public string password = "";
         string RoomName = "";
-        DurakServiceClient client = new DurakServiceClient();
+        DurakServiceClient client;
         #endregion
 
         #region Initialization
         public MainWindow()
         {
+            try {
+                client = new DurakServiceClient();
+            }
+            catch {
+
+            }
+            
             var rnd = new Random(DateTime.Now.Millisecond);
             userId = rnd.Next(100000, 999999);
             InitializeComponent();
@@ -44,11 +51,27 @@ namespace DurakApp
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             var t = Listbox.SelectedIndex;
-            var rooms = client.GetFreeRooms();
+            string[] rooms = new string[] {""};
+
+            try {
+                rooms = client.GetFreeRooms();
+            }
+            catch {
+                timer.Stop();
+                MessageBox.Show("Server error, please try later");
+                System.Windows.Application.Current.Shutdown();
+                return;
+            }
+
             Listbox.Items.Clear();
             foreach (var room in rooms)
             {
-                Listbox.Items.Add(new ListBoxItem() { Content = $"{room} {new string(' ', 25 - room.Length)} {(client.HasPassword(room) ? "🔒" : "  ")}" });
+                try {
+                    Listbox.Items.Add(new ListBoxItem() { Content = $"{room} {new string(' ', 25 - room.Length)} {(client.HasPassword(room) ? "🔒" : "  ")}" });
+                }
+                catch {
+                    
+                }
             }
             Listbox.SelectedIndex = t;
         }
@@ -70,7 +93,7 @@ namespace DurakApp
 
             password = rc.PasswordBox.Password;
             RoomName = rc.RoomNameTextBox.Text;
-
+            timer.Stop();
             var ww = new WaitWindow(client, RoomName);
             ww.Left = this.Left + 50;
             ww.Top = this.Top + 50;
@@ -78,11 +101,16 @@ namespace DurakApp
             if (ww.ShowDialog() == true)
             {
                 this.Visibility = Visibility.Hidden;
-                
                 GameStart();
             }
             
-            client.DeleteRoom(RoomName, password, userId);
+            try {
+                client.DeleteRoom(RoomName, password, userId);
+            }
+            catch {
+
+            }
+            timer.Start();
             timer_Tick(new object(), new EventArgs());
         }
         #endregion
@@ -126,13 +154,20 @@ namespace DurakApp
         #region Start game
         private void GameStart()
         {
+            timer.Stop();
             this.Visibility = Visibility.Hidden;
             var gw = new GameWindow(client, RoomName, userId, password);
             gw.Left = this.Left + 50;
             gw.Top = 30;
             gw.ShowDialog();
-            client.DeleteRoom(RoomName, password, userId);
+            try {
+                client.DeleteRoom(RoomName, password, userId);
+            }
+            catch {
+
+            }
             this.Visibility = Visibility.Visible;
+            timer.Start();
         }
         #endregion
 
@@ -147,8 +182,13 @@ namespace DurakApp
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            client.DeleteRoom(RoomName, password, userId);
-            client.Close();
+            try {
+                client.DeleteRoom(RoomName, password, userId);
+                client.Close();
+            }
+            catch {
+                
+            }
             Application.Current.Shutdown();
         }
         #endregion
