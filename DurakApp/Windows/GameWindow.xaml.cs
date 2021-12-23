@@ -143,9 +143,8 @@ namespace DurakApp.Windows
                     second = "";
                     secondClicked = null;
                     HandGrid.IsEnabled = true;
-                    
-                    RefreshButton_Click(sender, new RoutedEventArgs());
                     timer.Start();
+                    RefreshButton_Click(sender, new RoutedEventArgs());
                     return;
 
                 }
@@ -173,22 +172,22 @@ namespace DurakApp.Windows
                 GetOpponentCardsCount = client.GetOpponentCardsCount(RoomName, password, userID);
                 GetCardsInStockCount = client.GetCardsInStockCount(RoomName, password, userID);
             }
-            catch {
-                MessageBox.Show("Other player is out of the game");
-                this.Close();
-                return;
-            }
-            if (GetMoveOpportunity == "err" || GetCardsOnTable == null || GetMyCards == null || GetOpponentCardsCount == -1 || GetCardsInStockCount == -1) {
-                MessageBox.Show("Other player is out of the game");
-                this.Close();
+            catch {}
+
+            if (GetMoveOpportunity == "YouWin" || GetMoveOpportunity == "YouLose") {
+                timer.Stop();
+                MessageBox.Show(GetMoveOpportunity);
+                //this.Close();
+                DialogResult = true;
                 return;
             }
 
-            if (GetMoveOpportunity == "YouWin" || GetMoveOpportunity == "YouLose")
-            {
-                MessageBox.Show(GetMoveOpportunity);
+            if (GetMoveOpportunity == "err" || GetCardsOnTable == null || GetMyCards == null || GetOpponentCardsCount == -1 || GetCardsInStockCount == -1) {
                 timer.Stop();
+                MessageBox.Show("Other player is out of the game");
                 DialogResult = true;
+                //this.Close();
+                return;
             }
 
             TableGrid.ColumnDefinitions.Clear();
