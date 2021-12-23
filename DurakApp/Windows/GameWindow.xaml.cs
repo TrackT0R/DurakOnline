@@ -259,9 +259,15 @@ namespace DurakApp.Windows
                         break;
                     }
                 if (b || GetMoveOpportunity == "CanNothing")
+                {
+                    HandGrid.IsEnabled = false;
                     TakeButton.IsEnabled = false;
+                }
                 else
+                {
+                    HandGrid.IsEnabled = true;
                     TakeButton.IsEnabled = true;
+                }
 
                 foreach (var button in TableGrid.Children.OfType<Button>()) {
                     if (i > GetCardsOnTable.Count() - 1) {
@@ -293,11 +299,7 @@ namespace DurakApp.Windows
                     i++;
                 }
             }
-
-            if (GetMoveOpportunity == "CanNothing")
-                HandGrid.IsEnabled = false;
-            else          
-                HandGrid.IsEnabled = true;
+           
             
 
             if (GetMoveOpportunity == "CanAttack" || GetMoveOpportunity == "CanThrow" || GetMoveOpportunity == "CanThrowAfter") {
@@ -305,6 +307,7 @@ namespace DurakApp.Windows
                 BitoButton.Visibility = Visibility.Visible;
                 TableGrid.IsEnabled = false;
                 TableGrid2.IsEnabled = false;
+                HandGrid.IsEnabled = true;
                 bool b = true;
                 foreach (var list in GetCardsOnTable)
                     if (list.Count() < 2)

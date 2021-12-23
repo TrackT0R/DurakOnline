@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DurakApp"
         mc:Ignorable="d"
-        Title="WaitWindow" Height="65" Width="110" ResizeMode="NoResize">
+        Title="WaitWindow" Height="65" Width="110" ResizeMode="NoResize" Icon="..\images\icon.png">
     <Grid>
         <Label Content="Ожидание" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Name="label" Content="..." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="68,0,0,0"/>
