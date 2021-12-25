@@ -131,12 +131,14 @@ namespace DurakApp
                 var pw = new PasswordWindow();
                 pw.Left = this.Left + 50;
                 pw.Top = this.Top + 50;
-                if (pw.ShowDialog() == true)
+                if (pw.ShowDialog() == true) {
                     if (!client.ConnectRoom(RoomName, pw.PasswordBox.Password, userId))
                     {
                         MessageBox.Show("Не удалось подключиться");
                         return;
                     }
+                    password = pw.PasswordBox.Password;
+                }
             }
             else
             {
@@ -145,6 +147,7 @@ namespace DurakApp
                     MessageBox.Show("Не удалось подключиться");
                     return;
                 }
+                password = "";
             }
             
             GameStart();
